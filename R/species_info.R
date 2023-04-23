@@ -30,7 +30,7 @@ species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps")
   Sort.Order=PRESENCE=ORIGIN=SEASONAL=LEGEND=phylum=family=TaxonomicGroup=NULL
 
   #Edit data from KBA resources
-  tax_groups<- dplyr::filter(KBAscope::taxonomic_groups,!is.na(Sort.Order)) %>%
+  tax_groups<- dplyr::filter(taxonomic_groups,!is.na(Sort.Order)) %>%
     dplyr::add_row(Sort.Order=355,Kingdom=NULL,Phylum=NULL,Class=NULL,
     Order=NULL,Superfamily=NULL,Taxonomic.group.level="NA",
     Number.RR.species.required.at.KBA.with.1..range.for.B2=2,
