@@ -117,10 +117,10 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
 
       x<- x %>% dplyr::select(ScientificName,PRESENCE,ORIGIN,SEASONAL,LEGEND,geom) %>%
         dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL == 1) %>%
-        dplyr::group_by(SCIENTIFICNAME) %>% dplyr::reframe(geom= sf::st_union(geom)) %>%
+        dplyr::group_by(ScientificName) %>% dplyr::reframe(geom= sf::st_union(geom)) %>%
         base::as.data.frame() %>% sf::st_as_sf() %>% sf::st_make_valid() %>%
         sf::st_transform(.,"EPSG:4326") %>%
-        dplyr::left_join(.,species_info,by=c("SCIENTIFICNAME"="ScientificName")) %>%
+        dplyr::left_join(.,species_info,by="ScientificName") %>%
         dplyr::mutate(LEGEND= "Extant") %>%
         dplyr::mutate(Eco_bio_system= system,
         GlobalRange= base::as.numeric(units::set_units(sf::st_area(.), km^2)),
