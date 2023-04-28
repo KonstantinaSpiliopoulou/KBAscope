@@ -145,7 +145,7 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
   if(type=="localities"){
     x %>% dplyr::mutate(.,AssessmentParameter="(v) number of localities",
       DerivationOfEstimate="Estimated from mapping") %>%
-      base::split(x[[name]]) %>% lapply(.,function(x) dplyr::mutate(x,
+      base::split(x$ScientificName) %>% lapply(.,function(x) dplyr::mutate(x,
       GlobalRange= base::nrow(x))) %>% lapply(., function(y) sf::st_write(y,
       base::paste0("input/species/",system,"/",type,"/",
       base::unique(y$ScientificName),".gpkg"),row.names=FALSE))
