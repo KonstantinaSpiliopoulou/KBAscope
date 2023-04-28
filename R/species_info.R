@@ -53,6 +53,7 @@ species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps")
     dplyr::select(6,7,1,8:17,2:5) %>% base::unique()
   } else{
     info<- base::merge(x,red_list_info, by.x= name, by.y="ScientificName", all.x=TRUE) %>%
+      dplyr::select(-ASSESSMENT,-ID_NO,-COMPILER,-YEAR,-CITATION) %>%
       dplyr::rename(ScientificName=name)
   }
 
