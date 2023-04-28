@@ -53,7 +53,6 @@ species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps")
     dplyr::select(6,7,1,8:17,2:5) %>% base::unique()
   } else{
     info<- base::merge(x,red_list_info, by.x= name, by.y="ScientificName", all.x=TRUE) %>%
-      dplyr::select(-ASSESSMENT,-ID_NO,-COMPILER,-YEAR,-CITATION) %>%
       dplyr::rename(ScientificName=name)
   }
 
@@ -72,6 +71,11 @@ species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps")
     #remove columns
     if("LEGEND" %in% names(info)){
       info<- dplyr::select(info,-LEGEND) %>% unique()
+    }
+    #remove columns
+    if(unique(c("ASSESSMENT","ID_NO","COMPILER","YEAR","CITATION") %in% names(info))){
+    info<- dplyr::select(info,-ASSESSMENT,-ID_NO,-COMPILER,-YEAR,-CITATION) %>%
+      unique()
     }
     #add range restricted info
     if(length(unique(info$TaxonomicGroup))!=1){
