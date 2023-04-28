@@ -103,7 +103,6 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
 
        x<- x %>% dplyr::select(-ID_NO) %>% dplyr::left_join(., species_info,
         by="ScientificName") %>%
-        dplyr::mutate(ScientificName=SCI_NAME) %>%
         dplyr::mutate(Eco_bio_system= system,
         GlobalRange= base::as.numeric(units::set_units(sf::st_area(.), km^2)),
         Range_Restricted= base::ifelse(GlobalRange>=rr_size,"Yes","No"))
