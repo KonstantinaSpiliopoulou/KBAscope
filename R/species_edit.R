@@ -45,7 +45,7 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
 
   #Take cases according to data type
   if(type=="range_maps"){
-    base::colnames(x) [1:(base::ncol(x)-17)]<- base::toupper(base::names(x)[1:(base::ncol(x)-17)])
+    base::colnames(x) [1:(base::ncol(x)-21)]<- base::toupper(base::names(x)[1:(base::ncol(x)-21)])
     x<- dplyr::mutate(x, ScientificName = SCIENTIFICNAME)
 
     #range maps function to edit range maps
