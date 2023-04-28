@@ -46,12 +46,12 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
   #Take cases according to data type
   if(type=="range_maps"){
     base::colnames(x) [1:(base::ncol(x)-21)]<- base::toupper(base::names(x)[1:(base::ncol(x)-21)])
-    x<- dplyr::mutate(x, ScientificName = SCIENTIFICNAME)
+    #x<- dplyr::mutate(x, ScientificName = SCIENTIFICNAME)
 
     #range maps function to edit range maps
     range_maps<- function(x) {
     # filter species polygons based on IUCN Red List coding
-    if (base::unique(x$CLASS)== "Aves" & TRUE %in% (c(2,3) %in% x$SEASONAL)){
+    if (base::unique(x$class)== "Aves" & TRUE %in% (c(2,3) %in% x$SEASONAL)){
       rem<- c(1,4,5)
       code<- base::unique(x$SEASONAL); code<- code[!code %in% rem]
 
@@ -62,18 +62,18 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
           dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL %in% c(1,3))
         #Extract relevant information and merge them to final maps
         info1<- ranges_breeding %>% sf::st_drop_geometry() %>%
-          dplyr::select(ID_NO, SCIENTIFICNAME, LEGEND) %>%
+          dplyr::select(ID_NO, ScientificName, LEGEND) %>%
           dplyr::mutate(
             LEGEND= base::sub(")", "", base::sub(".*\\(", "",base::as.character(LEGEND))))%>%
           dplyr::distinct() %>%
-          dplyr::arrange(desc(LEGEND)) %>% dplyr::group_by(ID_NO, SCIENTIFICNAME) %>%
+          dplyr::arrange(desc(LEGEND)) %>% dplyr::group_by(ID_NO, ScientificName) %>%
           dplyr::mutate(LEGEND = base::paste(LEGEND, collapse=", ")) %>% base::unique()
         info2<- ranges_non_breeding %>% sf::st_drop_geometry() %>%
-          dplyr::select(ID_NO, SCIENTIFICNAME, LEGEND) %>%
+          dplyr::select(ID_NO, ScientificName, LEGEND) %>%
           dplyr::mutate(
             LEGEND= base::sub(")", "", base::sub(".*\\(", "",base::as.character(LEGEND))))%>%
           dplyr::distinct() %>% dplyr::arrange(desc(LEGEND)) %>%
-          dplyr::group_by(ID_NO, SCIENTIFICNAME) %>%
+          dplyr::group_by(ID_NO, ScientificName) %>%
           dplyr::mutate(LEGEND = base::paste(LEGEND, collapse=", ")) %>% base::unique()
         #Dissolve polygons
         df1<- ranges_breeding %>% sf::st_make_valid() %>% dplyr::group_by(ID_NO) %>%
@@ -89,11 +89,11 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
           dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL %in% c(1,code))
         #Extract relevant information and merge them to final maps
         info1<- ranges %>% sf::st_drop_geometry() %>%
-          dplyr::select(ID_NO, SCIENTIFICNAME, LEGEND) %>%
+          dplyr::select(ID_NO, ScientificName, LEGEND) %>%
          dplyr::mutate(
           LEGEND= base::sub(")", "", base::sub(".*\\(", "",base::as.character(LEGEND))))%>%
           dplyr::distinct() %>% dplyr::arrange(desc(LEGEND)) %>%
-          dplyr::group_by(ID_NO, SCIENTIFICNAME) %>%
+          dplyr::group_by(ID_NO, ScientificName) %>%
           dplyr::reframe(LEGEND = base::paste(LEGEND, collapse=", "))
         #Dissolve polygons
         x<- ranges %>% dplyr::group_by(ID_NO) %>%
@@ -115,14 +115,14 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
 
     } else {
 
-      x<- x %>% dplyr::select(SCIENTIFICNAME,PRESENCE,ORIGIN,SEASONAL,LEGEND,geom) %>%
+      x<- x %>% dplyr::select(ScientificName,PRESENCE,ORIGIN,SEASONAL,LEGEND,geom) %>%
         dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL == 1) %>%
         dplyr::group_by(SCIENTIFICNAME) %>% dplyr::reframe(geom= sf::st_union(geom)) %>%
         base::as.data.frame() %>% sf::st_as_sf() %>% sf::st_make_valid() %>%
         sf::st_transform(.,"EPSG:4326") %>%
         dplyr::left_join(.,species_info,by=c("SCIENTIFICNAME"="ScientificName")) %>%
-        dplyr::mutate(ScientificName=SCIENTIFICNAME, LEGEND= "Extant") %>%
-        dplyr::select(-SCIENTIFICNAME) %>% dplyr::mutate(Eco_bio_system= system,
+        dplyr::mutate(LEGEND= "Extant") %>%
+        dplyr::mutate(Eco_bio_system= system,
         GlobalRange= base::as.numeric(units::set_units(sf::st_area(.), km^2)),
         Range_Restricted= base::ifelse(GlobalRange>=rr_size,"Yes","No"))
 
