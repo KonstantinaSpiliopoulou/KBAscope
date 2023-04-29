@@ -48,7 +48,7 @@ kba_dataforms<- function(x){
   e<- x %>% dplyr::select(proportion)
 
   #Load KBA data form
-  wb <- KBAscope::data_form_multi_site
+  wb <- data_form_multi_site
   #Assign vectors to specified columns
   openxlsx::writeData(wb, a, sheet = "3. Biodiversity elements data",
                         startRow = 5, startCol = 2, colNames = FALSE)

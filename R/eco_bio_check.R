@@ -34,38 +34,38 @@ eco_bio_check<- function(x,ecoregion= NULL,eco_name=NULL,bioregion=NULL,bio_name
   #Create function to apply per species
   eco<- function(x) {
     #Check first if species name is in the file provided by the KBA programme
-    if(unique(x$ScientificName) %in% KBAscope::eco_bioregion_restricted$scientific_name){
+    if(unique(x$ScientificName) %in% eco_bioregion_restricted$scientific_name){
 
 
-      if(KBAscope::eco_bioregion_restricted$Restricted.to.Terrestrial.ecoregion[which(
-        KBAscope::eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
+      if(eco_bioregion_restricted$Restricted.to.Terrestrial.ecoregion[which(
+        eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
           x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
-            Eco_BioName=KBAscope::eco_bioregion_restricted$terrestrial_ecoregion_name[which(
-            KBAscope::eco_bioregion_restricted$scientific_name==x$ScientificName)])
+            Eco_BioName=eco_bioregion_restricted$terrestrial_ecoregion_name[which(
+            eco_bioregion_restricted$scientific_name==x$ScientificName)])
       }
-      if(KBAscope::eco_bioregion_restricted$Restricted.to.a.FW.ecoregion[which(
-        KBAscope::eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
+      if(eco_bioregion_restricted$Restricted.to.a.FW.ecoregion[which(
+        eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
           x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
-            Eco_BioName=KBAscope::eco_bioregion_restricted$freshwater_ecoregion_name[which(
-            KBAscope::eco_bioregion_restricted$scientific_name==x$ScientificName)])
+            Eco_BioName=eco_bioregion_restricted$freshwater_ecoregion_name[which(
+            eco_bioregion_restricted$scientific_name==x$ScientificName)])
       }
-      if(KBAscope::eco_bioregion_restricted$Restricted.to.marine.ecoregion[which(
-        KBAscope::eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
+      if(eco_bioregion_restricted$Restricted.to.marine.ecoregion[which(
+        eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
           x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
-            Eco_BioName=KBAscope::eco_bioregion_restricted$marine_ecoregion_name[which(
-            KBAscope::eco_bioregion_restricted$scientific_name==x$ScientificName)])
+            Eco_BioName=eco_bioregion_restricted$marine_ecoregion_name[which(
+            eco_bioregion_restricted$scientific_name==x$ScientificName)])
       }
-      if(KBAscope::eco_bioregion_restricted$Restricted.to.FW.bioregion[which(
-        KBAscope::eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
+      if(eco_bioregion_restricted$Restricted.to.FW.bioregion[which(
+        eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
           x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="Yes",
-            Eco_BioName=KBAscope::eco_bioregion_restricted$freshwater_bioregion_name[which(
-            KBAscope::eco_bioregion_restricted$scientific_name==x$ScientificName)])
+            Eco_BioName=eco_bioregion_restricted$freshwater_bioregion_name[which(
+            eco_bioregion_restricted$scientific_name==x$ScientificName)])
       }
-      if(KBAscope::eco_bioregion_restricted$Restricted.to.Marine.Bioregion[which(
-        KBAscope::eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
+      if(eco_bioregion_restricted$Restricted.to.Marine.Bioregion[which(
+        eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
         x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="Yes",
-          Eco_BioName=KBAscope::eco_bioregion_restricted$marine_bioregion_name[which(
-          KBAscope::eco_bioregion_restricted$scientific_name==x$ScientificName)])
+          Eco_BioName=eco_bioregion_restricted$marine_bioregion_name[which(
+          eco_bioregion_restricted$scientific_name==x$ScientificName)])
       }
       base::return(x)
 
