@@ -77,7 +77,7 @@ eco_bio_check<- function(x,ecoregion= NULL,eco_name=NULL,bioregion=NULL,bio_name
       #Check if ecoregion or bioregion is needed and intersect
       if(x$TaxonomicGroup %in% c("Actinopterygii","Aves","Cephalaspidomorphi",
         "Ceratophyllales","Chondrichthyes","Mammalia","Myxini","Sarcoptergyii")){
-        if(bioregion==NULL){
+        if(base::is.null(bioregion)){
           x<- dplyr::mutate(x,Eco_BioRestricted= "No",Eco_bio_list="No",Eco_BioName="")
         }else{
           temp<- data.frame(sf::st_intersects(sf::st_make_valid(bioregion),
