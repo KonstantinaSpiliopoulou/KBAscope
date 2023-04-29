@@ -82,7 +82,6 @@ eco_bio_check<- function(x,ecoregion= NULL,eco_name=NULL,bioregion=NULL,bio_name
         }else{
           temp<- data.frame(sf::st_intersects(sf::st_make_valid(bioregion),
           sf::st_make_valid(x))) %>% dplyr::select(1) %>% dplyr::distinct()
-        }
         #If intersection shows that species is restricted
         if(nrow(temp)==1){
           x<- x %>% dplyr::mutate(Eco_BioRestricted= "Yes",Eco_bio_list="No",
@@ -90,7 +89,7 @@ eco_bio_check<- function(x,ecoregion= NULL,eco_name=NULL,bioregion=NULL,bio_name
         } else {
           x<- dplyr::mutate(x,Eco_BioRestricted= "No",Eco_bio_list="No",Eco_BioName="")
         }
-
+        }
       } else {
         temp<- data.frame(sf::st_intersects(sf::st_make_valid(ecoregion),
           sf::st_make_valid(x))) %>% dplyr::select(1) %>% dplyr::distinct()
