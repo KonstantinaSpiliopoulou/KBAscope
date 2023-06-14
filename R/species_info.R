@@ -28,7 +28,7 @@ species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps")
 
   #Set parameters
   Sort.Order=PRESENCE=ORIGIN=SEASONAL=LEGEND=phylum=family=TaxonomicGroup=NULL
-
+  ASSESSMENT=ID_NO=COMPILER=YEAR=CITATION=NULL
   #Edit data from KBA resources
   tax_groups<- dplyr::filter(taxonomic_groups,!is.na(Sort.Order)) %>%
     dplyr::add_row(Sort.Order=355,Kingdom=NULL,Phylum=NULL,Class=NULL,
