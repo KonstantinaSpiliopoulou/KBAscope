@@ -1,10 +1,21 @@
 Package: KBAscope
-Title: What the Package Does (One Line, Title Case)
+Title: Scoping Analysis for Key Biodiversity Areas (KBAs)
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Authors@R: c(
+    person("Konstantina", "Spiliopoulou", , "konaspilio@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-4636-4905")), 
+    person("François", "Rigal", , "frantz.rigal@hotmail.fr", role = c("ctb"),
+           comment = c(ORCID = "0000-0001-6882-1591")),   
+    person("European Union’s Horizon 2020 research and innovation programme 
+      under the Marie Skłodowska-Curie Grant Agreement No. 766417", 
+      role = c("fnd"))   
+           )
+Description: KBAscope provides user-friendly functions for editing species 
+              data (population, range maps, area of occupancy, area of habitat 
+              and localities), applying Key Biodiversity Areas criteria and 
+              generating spatial and summary outputs that can be used in 
+              national workshops to help propose Key Biodiversity Areas in a 
+              country.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -22,6 +33,7 @@ Imports:
     magrittr,
     openxlsx,
     plyr,
+    rphylopic,
     sf,
     stringr,
     units
