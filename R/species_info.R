@@ -73,8 +73,8 @@ species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps")
       info<- dplyr::select(info,-LEGEND) %>% unique()
     }
     #remove columns
-    if(unique(c("ASSESSMENT","ID_NO","COMPILER","YEAR","CITATION") %in% names(info))){
-    info<- dplyr::select(info,-ASSESSMENT,-ID_NO,-COMPILER,-YEAR,-CITATION) %>%
+    if(unique(c("ASSESSMENT","ID_NO") %in% names(info))){
+    info<- dplyr::select(info,-ASSESSMENT,-ID_NO) %>%
       unique()
     }
     #add range restricted info
