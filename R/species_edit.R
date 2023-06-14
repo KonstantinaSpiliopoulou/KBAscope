@@ -39,7 +39,7 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
                     "Sarcopterygii","Odonata", "Ceratophyllales","Proteales")
 
   #Combine data with species information
-  x<- dplyr::rename(x, "ScientificName" = name)
+  x<- dplyr::mutate(x, ScientificName = name)
   x<- dplyr::left_join(x,species_info)
   sf::sf_use_s2(FALSE)
 
