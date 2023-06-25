@@ -55,7 +55,7 @@ view_results <- function(x,y, pic=TRUE) {
     # loop to integrate the pics #
     for(i in 1:length(y)){ 
       a1 <- a1 + rphylopic::add_phylopic(rphylopic::get_phylopic(
-        filter(taxonomic_groups, 
+        filter(taxonomic_groups_codes, 
         Taxonomic.group.level==grp[i])$uui,), x=x[i], y=y[i]+h.adjust, ysize=8)
     }
   } else {
