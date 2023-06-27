@@ -49,16 +49,16 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
     #x<- dplyr::mutate(x, ScientificName = SCIENTIFICNAME)
 
     #range maps function to edit range maps
-    range_maps<- function(x) {
+    range_maps<- function(y) {
     # filter species polygons based on IUCN Red List coding
-     if (base::unique(x$CLASS)== "Aves" & TRUE %in% (c(2,3) %in% x$SEASONAL)){
+     if (base::unique(y$CLASS)== "Aves" & TRUE %in% (c(2,3) %in% y$SEASONAL)){
       rem<- c(1,4,5)
-      code<- base::unique(x$SEASONAL); code<- code[!code %in% rem]
+      code<- base::unique(y$SEASONAL); code<- code[!code %in% rem]
 
       if (2 %in% code & 3 %in% code){
-        ranges_breeding<- x %>%
+        ranges_breeding<- y %>%
           dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL %in% c(1,2))
-        ranges_non_breeding<- x %>%
+        ranges_non_breeding<- y %>%
           dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL %in% c(1,3))
         #Extract relevant information and merge them to final maps
         info1<- ranges_breeding %>% sf::st_drop_geometry() %>%
@@ -83,9 +83,9 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
           dplyr::reframe(geom= sf::st_union(geom)) %>% base::data.frame() %>%
           sf::st_as_sf() %>% dplyr::left_join(.,info2) %>% base::unique()
 
-        x<- base::rbind(df1,df2) %>% base::unique()
+        y<- base::rbind(df1,df2) %>% base::unique()
       }else{
-        ranges<- x %>%
+        ranges<- y %>%
           dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL %in% c(1,code))
         #Extract relevant information and merge them to final maps
         info1<- ranges %>% sf::st_drop_geometry() %>%
@@ -96,25 +96,25 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
           dplyr::group_by(ID_NO, ScientificName) %>%
           dplyr::reframe(LEGEND = base::paste(LEGEND, collapse=", "))
         #Dissolve polygons
-        x<- ranges %>% dplyr::group_by(ID_NO) %>%
+        y<- ranges %>% dplyr::group_by(ID_NO) %>%
           dplyr::reframe(geom= sf::st_union(geom)) %>% base::data.frame() %>%
           sf::st_as_sf() %>% dplyr::left_join(.,info1, by= "ID_NO")
       }
 
-       x<- x %>% dplyr::select(-ID_NO) %>% dplyr::left_join(., species_info,
+       y<- y %>% dplyr::select(-ID_NO) %>% dplyr::left_join(., species_info,
         by="ScientificName") %>%
         dplyr::mutate(Eco_bio_system= system,
         GlobalRange= base::as.numeric(units::set_units(sf::st_area(.), km^2)),
         Range_Restricted= base::ifelse(GlobalRange>=rr_size,"Yes","No"))
 
-        x<- x%>% dplyr::mutate(RR_determined= base::ifelse(Range_Restricted=="Yes",
+        y<- y%>% dplyr::mutate(RR_determined= base::ifelse(Range_Restricted=="Yes",
           base::ifelse(TaxonomicGroup %in% comp_assessed,
                        "25th percentile","10,000 km2"),"n/a"))
-       return(x)
+       return(y)
 
     } else {
 
-      x<- x %>% dplyr::select(ScientificName,PRESENCE,ORIGIN,SEASONAL,LEGEND,geom) %>%
+      y<- y %>% dplyr::select(ScientificName,PRESENCE,ORIGIN,SEASONAL,LEGEND,geom) %>%
         dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL == 1) %>%
         dplyr::group_by(ScientificName) %>% dplyr::reframe(geom= sf::st_union(geom)) %>%
         base::as.data.frame() %>% sf::st_as_sf() %>% sf::st_make_valid() %>%
@@ -125,10 +125,10 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
         GlobalRange= base::as.numeric(units::set_units(sf::st_area(.), km^2)),
         Range_Restricted= base::ifelse(GlobalRange>=rr_size,"Yes","No"))
 
-      x<- x%>% dplyr::mutate(RR_determined= base::ifelse(Range_Restricted=="Yes",
+      y<- y%>% dplyr::mutate(RR_determined= base::ifelse(Range_Restricted=="Yes",
         base::ifelse(TaxonomicGroup %in% comp_assessed,
                      "25th percentile","10,000 km2"),"n/a"))
-      return(x)
+      return(y)
       }
   }
 
