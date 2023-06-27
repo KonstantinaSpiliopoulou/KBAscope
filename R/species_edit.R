@@ -132,7 +132,7 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
   #Take cases according to data type
   if(type=="range_maps"){
     base::colnames(x) [1:(base::ncol(x)-21)]<- base::toupper(base::names(x)[1:(base::ncol(x)-21)])
-	x<- dplyr::rename(x, "ScientificName" = "SCIENTIFICNAME")
+	x<- dplyr::mutate(x, ScientificName = SCIENTIFICNAME)
 	#apply range map function and write outputs
 	x<- x %>% base::split(x$ScientificName) %>% base::lapply(., range_maps) %>%
      base::do.call(base::rbind,.)
