@@ -39,7 +39,7 @@ view_results <- function(x,y, pic=TRUE) {
                          xlab = FALSE,
                          lab.size=11
   )+
-    ggpubr::font("x.text", size = 9) + scale_y_continuous(expand = c(0,0))
+    ggpubr::font("x.text", size = 9) + ggplot2::scale_y_continuous(expand = c(0,0))
   
   #Add taxonomy picture to columns
   if (pic==TRUE) {
@@ -84,7 +84,7 @@ view_results <- function(x,y, pic=TRUE) {
                          sort.by.groups = FALSE,
                          ylab = "Count\n",
                          xlab = "Criteria",
-  ) + scale_y_continuous(expand = c(0,0), limits = c(0, z)) 
+  ) + ggplot2::scale_y_continuous(expand = c(0,0), limits = c(0, z)) 
   
   #Create top right text
   number<- nrow(y)
