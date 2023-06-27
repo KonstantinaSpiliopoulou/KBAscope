@@ -46,7 +46,7 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
   #range maps function to edit range maps
   range_maps<- function(y) {
     # filter species polygons based on IUCN Red List coding
-     if (base::unique(y$CLASS)== "Aves" & TRUE %in% (c(2,3) %in% y$SEASONAL)){
+     if (base::unique(y$CLASS)== "Aves"){ #& TRUE %in% (c(2,3) %in% y$SEASONAL)){
       rem<- c(1,4,5)
       code<- base::unique(y$SEASONAL); code<- code[!code %in% rem]
 
