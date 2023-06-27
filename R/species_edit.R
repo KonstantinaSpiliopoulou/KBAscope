@@ -39,14 +39,14 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
                     "Sarcopterygii","Odonata", "Ceratophyllales","Proteales")
 
   #Combine data with species information
-  x$ScientificName<- x[,name]
+  x<- x %>% dplyr::rename("ScientificName" = name)
   x<- dplyr::left_join(x,species_info, by= "ScientificName")
   sf::sf_use_s2(FALSE)
 
   #range maps function to edit range maps
   range_maps<- function(y) {
     # filter species polygons based on IUCN Red List coding
-     if (base::unique(y$class)== "Aves"){ #& TRUE %in% (c(2,3) %in% y$SEASONAL)){
+     if (base::unique(y$class)== "Aves" & TRUE %in% (c(2,3) %in% y$SEASONAL)){
       rem<- c(1,4,5)
       code<- base::unique(y$SEASONAL); code<- code[!code %in% rem]
 
@@ -132,7 +132,7 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
   #Take cases according to data type
   if(type=="range_maps"){
     base::colnames(x) [1:(base::ncol(x)-21)]<- base::toupper(base::names(x)[1:(base::ncol(x)-21)])
-	#x<- dplyr::mutate(x, ScientificName = SCIENTIFICNAME)
+	x<- dplyr::rename(x, "ScientificName" = "SCIENTIFICNAME")
 	#apply range map function and write outputs
 	x<- x %>% base::split(x$ScientificName) %>% base::lapply(., range_maps) %>%
      base::do.call(base::rbind,.)
