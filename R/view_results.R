@@ -24,7 +24,7 @@ view_results <- function(x,y, pic=TRUE) {
   #Create basis for top right info
   df1<- x %>% dplyr::group_by(TaxonomicGroup) %>%
     dplyr::summarise(n=dplyr::n_distinct(ScientificName))
-  z=max(df1$n) + 0.2 * max(df1$n) # add some space 
+  z<-max(df1$n) + 0.2 * max(df1$n) # add some space 
   
   #Create top left graph
   
@@ -47,17 +47,20 @@ view_results <- function(x,y, pic=TRUE) {
     df1.naomit <- na.omit(df1)
     df1.naomit <- df1.naomit[order(df1.naomit$n, decreasing=T),] # remove NA if applies 
     
-    y <- df1.naomit$n 
-    x <- 1:length(y)
+    temp1 <- df1.naomit$n 
+    temp2 <- 1:length(temp1)
     grp <- df1.naomit$TaxonomicGroup
     h.adjust <- 0.1*max(df1$n)
     
     # loop to integrate the pics #
-    for(i in 1:length(y)){ 
+    for(i in 1:length(temp1)){ 
       a1 <- a1 + rphylopic::add_phylopic(rphylopic::get_phylopic(
-        filter(taxonomic_groups_codes, 
-        Taxonomic.group.level==grp[i])$uui,), x=x[i], y=y[i]+h.adjust, ysize=8)
+        dplyr::filter(taxonomic_groups_codes, 
+        Taxonomic.group.level==grp[i])$uui), x=temp2[i], y=temp1[i]+h.adjust, ysize=0.25)
     }
+    rm(temp1)
+    rm(temp2)
+    gc()
   } else {
     a1=a1
   }
