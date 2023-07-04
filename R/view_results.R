@@ -55,8 +55,8 @@ view_results <- function(x,y, pic=TRUE) {
     # loop to integrate the pics #
     for(i in 1:length(temp1)){ 
       a1 <- a1 + rphylopic::add_phylopic(rphylopic::get_phylopic(
-        dplyr::filter(taxonomic_groups_codes, 
-        Taxonomic.group.level==grp[i])$uui), x=temp2[i], y=temp1[i]+h.adjust, ysize=0.25)
+        base::unique(dplyr::filter(taxonomic_groups_codes, 
+        Taxonomic.group.level==grp[i])$uui)), x=temp2[i], y=temp1[i]+h.adjust, ysize=0.25)
     }
     rm(temp1)
     rm(temp2)
