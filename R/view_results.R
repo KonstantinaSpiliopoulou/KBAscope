@@ -56,7 +56,7 @@ view_results <- function(x,y, pic=TRUE) {
     for(i in 1:length(temp1)){ 
       a1 <- a1 + rphylopic::add_phylopic(rphylopic::get_phylopic(
         base::unique(dplyr::filter(taxonomic_groups_codes, 
-        Taxonomic.group.level==grp[i])$uui)), x=temp2[i], y=temp1[i]+h.adjust, ysize=5)
+        Taxonomic.group.level==grp[i])$uui)), x=temp2[i], y=temp1[i]+h.adjust, ysize=8)
     }
     rm(temp1)
     rm(temp2)
