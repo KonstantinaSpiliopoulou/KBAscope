@@ -52,9 +52,9 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
 
       if (2 %in% code & 3 %in% code){
         ranges_breeding<- y %>%
-          dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL %in% c(1,2))
+          dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2,6) & SEASONAL %in% c(1,2,5))
         ranges_non_breeding<- y %>%
-          dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL %in% c(1,3))
+          dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2,6) & SEASONAL %in% c(1,3,5))
         #Extract relevant information and merge them to final maps
         info1<- ranges_breeding %>% sf::st_drop_geometry() %>%
           dplyr::select(ID_NO, ScientificName, LEGEND) %>%
@@ -81,7 +81,7 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
         y<- base::rbind(df1,df2) %>% base::unique()
       }else{
         ranges<- y %>%
-          dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL %in% c(1,code))
+          dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2,6) & SEASONAL %in% c(1,code))
         #Extract relevant information and merge them to final maps
         info1<- ranges %>% sf::st_drop_geometry() %>%
           dplyr::select(ID_NO, ScientificName, LEGEND) %>%
@@ -110,7 +110,7 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
     } else {
 
       y<- y %>% dplyr::select(ScientificName,PRESENCE,ORIGIN,SEASONAL,LEGEND,geom) %>%
-        dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2) & SEASONAL == 1) %>%
+        dplyr::filter(PRESENCE %in% c(1,2) & ORIGIN %in% c(1,2,6)) %>%
         dplyr::group_by(ScientificName) %>% dplyr::reframe(geom= sf::st_union(geom)) %>%
         base::as.data.frame() %>% sf::st_as_sf() %>% sf::st_make_valid() %>%
         sf::st_transform(.,"EPSG:4326") %>%
