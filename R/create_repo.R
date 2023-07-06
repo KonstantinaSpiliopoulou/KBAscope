@@ -6,7 +6,12 @@
 #' @return Folder structure at a selected directory is created.
 #' @export
 #'
-#' @examples x<- "C:/projects/KBA_scoping_analysis"
+#' @examples 
+#'   df<- "C:/projects/KBA_scoping_analysis"
+#'   
+#'   \dontrun{
+#'     create_repo(df)
+#'   }
 #'
 create_repo<- function(x) {
 

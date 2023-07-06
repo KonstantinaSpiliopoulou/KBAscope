@@ -8,6 +8,7 @@
 #' @export
 #'
 #' @examples
+#' 
 #' spatial_units_edit(KBAscope::spatial_units,id="id")
 #'
 #'

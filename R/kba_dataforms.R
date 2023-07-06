@@ -7,17 +7,11 @@
 #' @export
 #'
 #' @examples
-#' if (FALSE) {
-#' x<- data.frame(SiteID="", CommonName="", ScientificName="", TaxonomicGroup="",
-#'            GlobalRedListCategory="", AssessAgainstA1c_A1d="",
-#'            AssessmentParameter="", GlobalRange="",Source="",
-#'            Range_Restricted="",Eco_BioRestricted="", Eco_BioName="",
-#'            SiteRange="", DerivationOfEstimate="", SourceOfData="",
-#'            YearOfSiteValues="")
+#' \dontrun{
+#'   df<- sf::st_drop_geometry(triggers_gis)
 #'
-#' kba_dataforms(x)
-#'
-#'}
+#'   kba_dataforms(df)
+#' }
 #'
 kba_dataforms<- function(x){
 
@@ -26,7 +20,7 @@ kba_dataforms<- function(x){
   AssessmentParameter=GlobalRange=Source=Range_Restricted=Eco_BioName=NULL
   SourceOfData=YearOfSiteValues=internalTaxonId=proportion=System=NULL
   Eco_bio_list=AssessAgainstA1c_A1d=SiteRange=DerivationOfEstimate=NULL
-  Eco_BioRestricted=Eco_bio_system=RR_determined=NULL
+  Eco_BioRestricted=Eco_bio_system=RR_determined=data_form_multi_site=NULL
 
   #Select data to be used in the KBA data form
   x<- x %>% dplyr::select(SiteID, internalTaxonId, CommonName, ScientificName,

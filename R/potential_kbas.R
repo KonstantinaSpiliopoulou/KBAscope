@@ -1,4 +1,4 @@
-#' Generates potential KBA sites.
+#' Generates potential KBA sites and the specie that trigger KBA criteria.
 #'
 #' @param x The directory under which inputs and outputs of a KBA scoping
 #'          analysis are stored.
@@ -11,11 +11,12 @@
 #'        and  'ptrigger_species.csv' under results folder.
 #' @export
 #'
-#' @examples if (FALSE) {
-#'
-#' potential_kbas(x)
-#'
-#'}
+#' @examples 
+#' 
+#' \dontrun{
+#'   df<- "C:/projects/KBA_scoping_analysis"
+#'   potential_kbas(df, system="terrestrial", output=".gpkg" )
+#' }
 #'
 potential_kbas<- function(x,system="terrestrial", output=".gpkg"){
 

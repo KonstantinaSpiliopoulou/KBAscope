@@ -16,10 +16,6 @@
 #'   SCI_NAME="A", Range_Restricted="", Eco_BioRestricted="", TaxonomicGroup="",
 #'   proportion=""))
 #'
-#' eco_info<- data.frame(scientific_name= "A",Restricted.to.Terrestrial.ecoregion="TRUE",
-#'   Restricted.to.a.FW.ecoregion="",Restricted.to.marine.ecoregion="",
-#'   Restricted.to.FW.bioregion="",Restricted.to.Marine.Bioregion="")
-#'
 #' eco_bio_check(x,ecoregion=KBAscope::ecoregion,eco_name="ECO_NAME",
 #'   bioregion=NULL, bio_name=NULL)
 #'
@@ -29,7 +25,7 @@ eco_bio_check<- function(x,ecoregion= NULL,eco_name=NULL,bioregion=NULL,bio_name
 
   #set some parameters
   sf::sf_use_s2(FALSE)
-  .=NULL
+  eco_bioregion_restricted=.=NULL
 
   #Create function to apply per species
   eco<- function(x) {
@@ -84,7 +80,7 @@ eco_bio_check<- function(x,ecoregion= NULL,eco_name=NULL,bioregion=NULL,bio_name
           sf::st_make_valid(x))) %>% dplyr::select(1) %>% dplyr::distinct()
         #If intersection shows that species is restricted
         if(nrow(temp)==1){
-          x<- x %>% dplyr::mutate(Eco_BioRestricted= "Yes",Eco_bio_list="No",
+          x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="No",
             Eco_BioName= bioregion[[bio_name]][temp[1,1]])
         } else {
           x<- dplyr::mutate(x,Eco_BioRestricted= "No",Eco_bio_list="No",Eco_BioName="")
@@ -95,7 +91,7 @@ eco_bio_check<- function(x,ecoregion= NULL,eco_name=NULL,bioregion=NULL,bio_name
           sf::st_make_valid(x))) %>% dplyr::select(1) %>% dplyr::distinct()
         #If intersection shows that species is restricted
         if(nrow(temp)==1){
-          x<- x %>% dplyr::mutate(Eco_BioRestricted= "Yes",Eco_bio_list="No",
+          x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="No",
                                   Eco_BioName= ecoregion[[eco_name]][temp[1,1]])
         } else {
           x<- dplyr::mutate(x,Eco_BioRestricted= "No",Eco_bio_list="No",Eco_BioName="")

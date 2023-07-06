@@ -9,22 +9,21 @@
 #' @param red_list If TRUE data are assessed in the IUCN Red List of Threatened
 #'                Species. If FALSE data are not assessed in the IUCN Red List
 #'                of Threatened Species.
-#' @param red_list_info Object of class data frame created by
-#'                      KBAscope::red_list_info().
+#' @param taxonomy_info Object of class data frame created by
+#'              KBAscope::red_list_info() or manually for species not assessed in 
+#'              the IUCN Red List of Threatened Species.
 #' @return Object of class data frame that contains all the necessary
 #'        information to apply KBA criteria.
 #' @export
 #'
 #' @examples
-#'
-#' if (FALSE){
-#' species_info(KBAscope::species,name="SCI_NAME",
-#'   red_list=TRUE,red_list_info)
+#' \dontrun{
+#'   species_info(KBAscope::species,name="SCI_NAME", red_list=TRUE,info= info)
 #' }
 #'
 #'
 species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps"),
-                        red_list=TRUE,red_list_info=NULL){
+                        red_list=TRUE,taxonomy_info=NULL){
 
   #Set parameters
   Sort.Order=PRESENCE=ORIGIN=SEASONAL=LEGEND=phylum=family=TaxonomicGroup=NULL
@@ -45,14 +44,13 @@ species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps")
 
   #Cases when red lited or not
   if (red_list==FALSE){
-    info<- x %>% dplyr::mutate(
-    internalTaxonId="", CommonName="", TaxonomicGroup_KBA_dataForm="",
-    GlobalRedListCategory="",AssessAgainstA1c_A1d="", AssessmentParameter="",
-    Source="", DerivationOfEstimate="",SourceOfData="",Range_Restricted="",
-    Eco_BioRestricted="", YearOfSiteValues="") %>%
-    dplyr::select(6,7,1,8:17,2:5) %>% base::unique()
+    info<- x %>% base::merge(x,taxonomy_info, by.x= name, by.y="ScientificName", all.x=TRUE) %>%
+      dplyr::rename(ScientificName=name) %>% dplyr::mutate(internalTaxonId="", CommonName="",
+      GlobalRedListCategory="",AssessAgainstA1c_A1d="", AssessmentParameter="",
+      Source="", DerivationOfEstimate="",SourceOfData="",Range_Restricted="",
+      Eco_BioRestricted="", YearOfSiteValues="") %>% base::unique()
   } else{
-    info<- base::merge(x,red_list_info, by.x= name, by.y="ScientificName", all.x=TRUE) %>%
+    info<- base::merge(x,taxonomy_info, by.x= name, by.y="ScientificName", all.x=TRUE) %>%
       dplyr::rename(ScientificName=name)
   }
 

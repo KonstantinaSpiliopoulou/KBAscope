@@ -8,10 +8,10 @@
 #' @export
 #'
 #' @examples
-#' x<- data.frame(SCI_NAME= "A",Range_Restricted="", Eco_BioRestricted="",
+#' df<- data.frame(SCI_NAME= "A",Range_Restricted="", Eco_BioRestricted="",
 #'   TaxonomicGroup="", proportion="") %>% dplyr::left_join(KBAscope::species)
 #'
-#' criterion_B(x)
+#' criterion_B(df)
 #'
 criterion_B<- function(x, criterion= c("B1","B2","B3")) {
 

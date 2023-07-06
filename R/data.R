@@ -2,7 +2,8 @@
 #'
 #' A data set containing grid cells of 100 x 100 km2.
 #'  The variables are as follows:
-#'  @format Object of class sf and data frame with 486 rows and 2 variables: \code{id}, \code{geom}
+#'  @format Object of class sf and data frame with 486 rows and 2 variables: \code{id},
+#'    \code{geom}
 #'  \describe{
 #'  \item{id}{unique id of each grid cell}
 #'  \item{geom}{geometry of the polygons}
@@ -14,11 +15,13 @@
 
 #' Species range maps
 #'
-#' A data set containing imaginary range maps for three example species A, B and C. Data structure is
-#'  set out in such way, to simulate the data standards of the IUCN Red List of Threatened Species.
-#'  Any similarity to real data from the IUCN Red List of Threatened Species is a mere coincidence.
-#'  The variables (find more details for the variables in the IUCN Red List of Threatened Species website
-#'  https://www.iucnredlist.org/) are as follows:
+#' A data set containing imaginary range maps for three example species A, B and C. 
+#' Data structure is set out in such way, to simulate the data standards of the IUCN 
+#' Red List of Threatened Species. Any similarity to real data from the IUCN Red List 
+#' of Threatened Species is a mere coincidence. 
+#' 
+#' The variables (find more details for the variables in the IUCN Red List of Threatened 
+#' Species website https://www.iucnredlist.org/) are as follows:
 #'
 #'  @format  Object of class sf and data frame with 6 rows and 8 variables:\code{ASSESSMENT},
 #'   \code{ID_NO}, \code{SCI_NAME}, \code{PRESENCE}, \code{ORIGIN}, \code{SEASONAL},
@@ -221,4 +224,43 @@
 #' (https://www.keybiodiversityareas.org/working-with-kbas/proposing-updating/criteria-tools)
 "data_form_multi_site"
 
+
+#' Triggers GIS
+#' 
+#' KBAscope test species that trigger KBA criteria in KBAscope test spatial units. 
+#' It is added to KBAscope to increase the understanding of applying KBAscope and #
+#' to assist examples in several functions.  
+#' 
+#' @format Object of class sf and data frame with 92 rows and 39 variables: 
+#'    \code{SiteID},
+#'    \code{LEGEND},
+#'    \code{ScientificName},
+#'    \code{internalTaxonId},
+#'    \code{CommonName},
+#'    \code{TaxonomicGroup_KBA_dataForm},
+#'    \code{GlobalRedListCategory},
+#'    \code{AssessAgainstA1c_A1d},
+#'    \code{AssessmentParameter},
+#'    \code{Source},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{SiteID},
+#'    \code{geom}
+#'  \describe{
+#'  \item{id}{unique id of each grid cell}
+#'  \item{geom}{geometry of the polygons}
+#' }
+#' 
+"triggers_gis"
 

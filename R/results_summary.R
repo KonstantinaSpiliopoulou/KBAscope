@@ -8,12 +8,14 @@
 #' @export
 #'
 #' @examples
-#' x<- data.frame(Criteria="",SiteID="",TaxonomicGroup="",ScientificName="",
-#'   Criterion_A1="",Criterion_B1="",Criterion_B2="",Criterion_B3="",
-#'   site_B2="",B2_RR="",nB2="",site_B3="",nB3="")
+#' 
+#' \dontrun{
+#'   df<- data.frame(Criteria="",SiteID="",TaxonomicGroup="",ScientificName="",
+#'     Criterion_A1="",Criterion_B1="",Criterion_B2="",Criterion_B3="",
+#'     site_B2="",B2_RR="",nB2="",site_B3="",nB3="")
 #'
-#' results_summary(x)
-#'
+#'   results_summary(df, path="C:/projects/KBA_scoping_analysis/results/")
+#' }   
 #'
 #'
 results_summary<- function(x,path=NULL){

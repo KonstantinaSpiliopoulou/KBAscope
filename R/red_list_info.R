@@ -28,49 +28,22 @@ red_list_info<- function(taxonomy, assessment, common_names){
 
   #Fix columns
   x<- x[!base::duplicated(x[,1]),]
-  x<- x[,c("internalTaxonId","name","scientificName.x","className",
+  x<- x[,c("internalTaxonId","name","scientificName.x",
     "redlistCategory","redlistCriteria","assessmentDate","phylumName",
     "className","orderName","familyName")]
-  empty_cols<- c(paste0("c",12:17))
+  empty_cols<- c(paste0("c",11:16))
   x[,empty_cols]<- NA
-  x<- x[, c(1:6,12:17,7:11)]
+  x<- x[, c(1:6,11:16,7:10)]
 
   # Fix column names
   base::colnames(x)<- c("internalTaxonId", "CommonName", "ScientificName",
-    "TaxonomicGroup_KBA_dataForm", "GlobalRedListCategory", "AssessAgainstA1c_A1d",
+    "GlobalRedListCategory", "AssessAgainstA1c_A1d",
     "AssessmentParameter", "Source", "DerivationOfEstimate", "SourceOfData",
     "Range_Restricted", "Eco_BioRestricted","YearOfSiteValues","phylum",
     "class","order","family")
 
   #Fix values
-  x[,4]<- base::ifelse(x[,4] %in% c("GASTROPODA", "CEPHALOPODA", "BIVALVIA"), "Molluscs",
-    base::ifelse(x[,4] == "INSECTA", "Insects",
-      base::ifelse(x[,4] == "AVES", "Birds",
-        base::ifelse(x[,4] == "REPTILIA", "Reptiles",
-          base::ifelse(x[,4] == "MAMMALIA", "Mammals",
-            base::ifelse(x[,4] == "ARACHNIDA", "Arachnids",
-              base::ifelse(x[,4] == "AMPHIBIA", "Amphibians",
-                base::ifelse(x[,4] %in% c("ACTINOPTERYGII", "CEPHALASPIDOMORPHI",
-                  "CHONDRICHTHYES", "SARCOPTERYGII","MYXINI"), "Fish",
-                  base::ifelse(x[,4] %in% c("PINOPSIDA", "LILIOPSIDA", "BRYOPSIDA",
-                    "MAGNOLIOPSIDA","LYCOPODIOPSIDA","POLYPODIOPSIDA", "GINKGOOPSIDA",
-                    "GNETOPSIDA","CYCADOPSIDA", "TAKAKIOPSIDA","SPHAGNOPSIDA",
-                    "FLORIDEOPHYCEAE","JUNGERMANNIOPSIDA", "MARCHANTIOPSIDA",
-                    "CHAROPHYACEAE", "ULVOPHYCEAE", "CHLOROPHYCEAE",
-                    "ANTHOCEROTOPSIDA"), "Plants",
-                    base::ifelse(x[,4] %in% c("AGARICOMYCETES", "LECANOROMYCETES",
-                      "SORDARIOMYCETES", "PEZIZOMYCETES"),"Fungi",
-                      base::ifelse(x[,4] %in% c("MALACOSTRACA", "OSTRACODA",
-                        "MAXILLOPODA","BRANCHIOPODA"),"Crustacea",
-                        base::ifelse(x[,4] == "ANTHOZOA", "Corals",
-                          base::ifelse(x[,4] %in% c("HOLOTHUROIDEA", "DIPLOPODA",
-                            "CHILOPODA", "HYDROZOA", "ENOPLA","CLITELLATA",
-                            "POLYCHAETA", "ECHINOIDEA", "ONYCHOPHORA", "TURBELLARIA",                                               "ENTOGNATHA"), "Other invertebrates",
-                            base::ifelse(x[,4] %in% c("PHAEOPHYCEAE"),"Other",
-                              "Other"))))))))))))))
-
-
-  x$GlobalRedListCategory<- base::ifelse(x[,5] == "Endangered", "Endangered (EN)",
+  x$GlobalRedListCategory<- base::ifelse(x[,4] == "Endangered", "Endangered (EN)",
     base::ifelse(x[,5] == "Least Concern", "Least Concern (LC)",
       base::ifelse(x[,5] == "Data Deficient", "Data Deficient (DD)",
         base::ifelse(x[,5] == "Critically Endangered", "Critically Endangered (CR)",
@@ -81,7 +54,7 @@ red_list_info<- function(taxonomy, assessment, common_names){
 
   x$AssessmentParameter<- "(iv) range"
 
-  x$AssessAgainstA1c_A1d<- base::ifelse(stringr::str_detect(x[,6],
+  x$AssessAgainstA1c_A1d<- base::ifelse(stringr::str_detect(x[,5],
     base::paste(c("A.*2.*", "A.*1.*", "A.*3.*", "A.*4.*"),collapse = '|')),
     base::ifelse(stringr::str_detect(x[,6], base::paste(c("B.*", "C.*","D.*"),
       collapse = '|')),"No",

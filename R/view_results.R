@@ -10,16 +10,16 @@
 #' @export
 #'
 #' @examples
-#' if(FALSE){
-#'
-#' x<- x
+#' \dontrun{
+#'   df<- sf::st_drop_geometry(triggers_gis)
+#'   view_results(df,triggers_gis, pic=TRUE)
 #' }
 #'
 
 view_results <- function(x,y, pic=TRUE) {
   
   #Set parameters
-  TaxonomicGroup=ScientificName=.=km=SiteID=n=NULL
+  TaxonomicGroup=ScientificName=Taxonomic.group.level=.=km=SiteID=n=NULL
   
   #Create basis for top right info
   df1<- x %>% dplyr::group_by(TaxonomicGroup) %>%
@@ -44,7 +44,7 @@ view_results <- function(x,y, pic=TRUE) {
   #Add taxonomy picture to columns
   if (pic==TRUE) {
     # select group and y lim 
-    df1.naomit <- na.omit(df1)
+    df1.naomit <- stats::na.omit(df1)
     df1.naomit <- df1.naomit[order(df1.naomit$n, decreasing=T),] # remove NA if applies 
     
     temp1 <- df1.naomit$n 
