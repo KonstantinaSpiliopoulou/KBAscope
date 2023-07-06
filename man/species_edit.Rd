@@ -36,10 +36,10 @@ Changes species data into format to apply KBA scoping analysis.
 }
 \examples{
 
-if (FALSE){
+\dontrun{
 x<- KBAscope::species \%>\% dplyr::mutate(ScientificName="A")
-          RL<- red_list_info(KBAscope::taxonomy, KBAscope::assessment,
-           KBAscope::common_names)
+RL<- red_list_info(KBAscope::taxonomy, KBAscope::assessment,
+  KBAscope::common_names)
 
 species_edit(x, type="range_maps", name="SCI_NAME",species_info=RL,
   system="terrestrial")

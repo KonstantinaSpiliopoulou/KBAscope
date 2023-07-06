@@ -18,10 +18,10 @@ Tests against KBA criteria for A:Threatened Biodiversity
 }
 \examples{
 
-x<- data.frame(SCI_NAME= "A",GlobalRedListCategory="", AssessAgainstA1c_A1d="",
+df<- data.frame(SCI_NAME= "A",GlobalRedListCategory="", AssessAgainstA1c_A1d="",
           proportion="") \%>\% dplyr::left_join(KBAscope::species)
 
-criterion_A(x)
+criterion_A(df)
 
 
 }

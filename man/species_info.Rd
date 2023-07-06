@@ -9,7 +9,7 @@ species_info(
   name,
   type = c("AOO", "AOH", "localities", "range_maps"),
   red_list = TRUE,
-  red_list_info = NULL
+  taxonomy_info = NULL
 )
 }
 \arguments{
@@ -26,8 +26,9 @@ data of x. Takes values "AOO", "AOH","localities" or "range_maps".}
 Species. If FALSE data are not assessed in the IUCN Red List
 of Threatened Species.}
 
-\item{red_list_info}{Object of class data frame created by
-KBAscope::red_list_info().}
+\item{taxonomy_info}{Object of class data frame created by
+KBAscope::red_list_info() or manually for species not assessed in
+the IUCN Red List of Threatened Species.}
 }
 \value{
 Object of class data frame that contains all the necessary
@@ -37,10 +38,8 @@ information to apply KBA criteria.
 Creates a data frame with all the necessary information to apply KBA criteria.
 }
 \examples{
-
-if (FALSE){
-species_info(KBAscope::species,name="SCI_NAME",
-  red_list=TRUE,red_list_info)
+\dontrun{
+  species_info(KBAscope::species,name="SCI_NAME", red_list=TRUE,info= info)
 }
 
 

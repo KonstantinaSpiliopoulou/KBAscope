@@ -31,11 +31,11 @@ KBA criteria.
 Saves output per species triggering KBA criteria
 }
 \examples{
-if(FALSE){
-x<- KBAscope::species[1,-3] \%>\% cbind(data.frame(ScientificName=c("A"),
+\dontrun{
+df<- KBAscope::species[1,-3] \%>\% cbind(data.frame(ScientificName=c("A"),
           Criteria=c("A1a,B1")))
 
-save_triggers(x, type="range_maps",path=NULL, output=".gpkg")
+save_triggers(df, type="range_maps",path=NULL, output=".gpkg")
 
 }
 

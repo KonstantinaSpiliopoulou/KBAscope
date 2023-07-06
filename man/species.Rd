@@ -11,13 +11,15 @@ An object of class \code{sf} (inherits from \code{data.frame}) with 6 rows and 8
 species
 }
 \description{
-A data set containing imaginary range maps for three example species A, B and C. Data structure is
-set out in such way, to simulate the data standards of the IUCN Red List of Threatened Species.
-Any similarity to real data from the IUCN Red List of Threatened Species is a mere coincidence.
-The variables (find more details for the variables in the IUCN Red List of Threatened Species website
-https://www.iucnredlist.org/) are as follows:
+A data set containing imaginary range maps for three example species A, B and C.
+Data structure is set out in such way, to simulate the data standards of the IUCN
+Red List of Threatened Species. Any similarity to real data from the IUCN Red List
+of Threatened Species is a mere coincidence.
 }
 \details{
+The variables (find more details for the variables in the IUCN Red List of Threatened
+Species website https://www.iucnredlist.org/) are as follows:
+
 @format  Object of class sf and data frame with 6 rows and 8 variables:\code{ASSESSMENT},
 \code{ID_NO}, \code{SCI_NAME}, \code{PRESENCE}, \code{ORIGIN}, \code{SEASONAL},
 \code{LEGEND}, \code{geom}

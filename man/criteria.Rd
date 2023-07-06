@@ -25,9 +25,10 @@ x with one new column for all the KBA criteria
 Combines criteria columns.
 }
 \examples{
-x<- data.frame(ScientificName=c("A"),Criterion_A1=c("A1a"),Criterion_B1=c("B1")) \%>\%
+df<- data.frame(ScientificName=c("A"),Criterion_A1=c("A1a"),Criterion_B1=c("B1")) \%>\%
   cbind(KBAscope::species[1,-3])
 
-criteria(x, KBAcriteria=c("Criterion_A1","Criterion_B1"))
+criteria(df, KBAcriteria=c("Criterion_A1","Criterion_B1"))
+
 
 }

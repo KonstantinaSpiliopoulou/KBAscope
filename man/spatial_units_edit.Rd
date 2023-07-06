@@ -19,6 +19,7 @@ A new ID column, if missing, and removed redundant columns.
 Edit spatial units to contain a unique ID column.
 }
 \examples{
+
 spatial_units_edit(KBAscope::spatial_units,id="id")
 
 

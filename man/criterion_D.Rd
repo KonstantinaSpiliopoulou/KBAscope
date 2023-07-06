@@ -17,10 +17,11 @@ x with three new columns Criterion_D1, Criterion_D2 and Criterion_D3.
 ests against KBA criteria for D: Biological Processes
 }
 \examples{
-x<- data.frame(SCI_NAME= "A", SiteID="1001",proportion="1.3") \%>\%
+
+df<- data.frame(SCI_NAME= "A", SiteID="1001",proportion="1.3") \%>\%
             dplyr::left_join(KBAscope::species)
 
-  criterion_D(x)
+criterion_D(df)
 
 
 

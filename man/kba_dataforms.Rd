@@ -17,16 +17,10 @@ Generates pre-populated KBA data forms under results folder.
 Pre-populates KBA data forms with KBA scoping analysis results.
 }
 \examples{
-if (FALSE) {
-x<- data.frame(SiteID="", CommonName="", ScientificName="", TaxonomicGroup="",
-           GlobalRedListCategory="", AssessAgainstA1c_A1d="",
-           AssessmentParameter="", GlobalRange="",Source="",
-           Range_Restricted="",Eco_BioRestricted="", Eco_BioName="",
-           SiteRange="", DerivationOfEstimate="", SourceOfData="",
-           YearOfSiteValues="")
+\dontrun{
+  df<- sf::st_drop_geometry(triggers_gis)
 
-kba_dataforms(x)
-
+  kba_dataforms(df)
 }
 
 }

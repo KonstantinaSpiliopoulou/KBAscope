@@ -17,6 +17,10 @@ Folder structure at a selected directory is created.
 Creates a specific folder structure to perform KBA scoping analysis.
 }
 \examples{
-x<- "C:/projects/KBA_scoping_analysis"
+  df<- "C:/projects/KBA_scoping_analysis"
+  
+  \dontrun{
+    create_repo(df)
+  }
 
 }

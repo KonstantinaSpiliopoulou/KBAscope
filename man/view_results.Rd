@@ -22,9 +22,9 @@ Creates figures of summary results.
 Visualize results.
 }
 \examples{
-if(FALSE){
-
-x<- x
+\dontrun{
+  df<- sf::st_drop_geometry(triggers_gis)
+  view_results(df,triggers_gis, pic=TRUE)
 }
 
 }

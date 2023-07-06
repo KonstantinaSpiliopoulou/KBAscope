@@ -37,10 +37,6 @@ x<- KBAscope::species[1,] \%>\% dplyr::left_join(data.frame(ScientificName= "A",
   SCI_NAME="A", Range_Restricted="", Eco_BioRestricted="", TaxonomicGroup="",
   proportion=""))
 
-eco_info<- data.frame(scientific_name= "A",Restricted.to.Terrestrial.ecoregion="TRUE",
-  Restricted.to.a.FW.ecoregion="",Restricted.to.marine.ecoregion="",
-  Restricted.to.FW.bioregion="",Restricted.to.Marine.Bioregion="")
-
 eco_bio_check(x,ecoregion=KBAscope::ecoregion,eco_name="ECO_NAME",
   bioregion=NULL, bio_name=NULL)
 

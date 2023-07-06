@@ -2,7 +2,7 @@
 % Please edit documentation in R/potential_kbas.R
 \name{potential_kbas}
 \alias{potential_kbas}
-\title{Generates potential KBA sites.}
+\title{Generates potential KBA sites and the specie that trigger KBA criteria.}
 \usage{
 potential_kbas(x, system = "terrestrial", output = ".gpkg")
 }
@@ -21,13 +21,13 @@ Creates output files 'potential_KBAs.gpkg', 'ptrigger_species.gpkg'
 and  'ptrigger_species.csv' under results folder.
 }
 \description{
-Generates potential KBA sites.
+Generates potential KBA sites and the specie that trigger KBA criteria.
 }
 \examples{
-if (FALSE) {
 
-potential_kbas(x)
-
+\dontrun{
+  df<- "C:/projects/KBA_scoping_analysis"
+  potential_kbas(df, system="terrestrial", output=".gpkg" )
 }
 
 }

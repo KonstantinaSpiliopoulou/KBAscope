@@ -13,7 +13,8 @@ spatial_units
 \description{
 A data set containing grid cells of 100 x 100 km2.
 The variables are as follows:
-@format Object of class sf and data frame with 486 rows and 2 variables: \code{id}, \code{geom}
+@format Object of class sf and data frame with 486 rows and 2 variables: \code{id},
+\code{geom}
 \describe{
 \item{id}{unique id of each grid cell}
 \item{geom}{geometry of the polygons}

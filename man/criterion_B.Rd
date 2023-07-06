@@ -19,9 +19,9 @@ x with three new columns Criterion_B1, Criterion_B2, Criterion_B3.
 Tests against KBA criteria for B:Geographically Restricted Biodiversity
 }
 \examples{
-x<- data.frame(SCI_NAME= "A",Range_Restricted="", Eco_BioRestricted="",
+df<- data.frame(SCI_NAME= "A",Range_Restricted="", Eco_BioRestricted="",
   TaxonomicGroup="", proportion="") \%>\% dplyr::left_join(KBAscope::species)
 
-criterion_B(x)
+criterion_B(df)
 
 }
