@@ -30,17 +30,6 @@ potential_kbas<- function(x,system="terrestrial", output=".gpkg"){
   ptriggers<- base::lapply(files,
     function(x) sf::st_read(x,stringsAsFactors=FALSE)) %>%
     plyr::ldply(data.frame) %>% sf::st_sf()
-
-  #Correct geometry collections
-  if ("GEOMETRYCOLLECTION"%in% sf::st_geometry_type(ptriggers)== TRUE){ #start of if
-    gem<- sf::st_cast(ptriggers)[which(sf::st_is(sf::st_cast(ptriggers),
-                                                 "GEOMETRYCOLLECTION")),]
-    test<- gem %>% sf::st_buffer(., 0.0) %>% sf::st_make_valid() %>%
-      sf::st_cast("MULTIPOLYGON")
-    ptriggers<-sf::st_cast(ptriggers)[which(!sf::st_is(sf::st_cast(ptriggers),
-                                                       "GEOMETRYCOLLECTION")),]
-    ptriggers<- base::rbind(ptriggers,test)
-  } #end of if
   
   #Filter out species that meet only B2 and B3 criteria but do not meet the site threshold
   B2.B3<- ptriggers %>% dplyr::filter(Criterion_B2=="B2"| Criterion_B3=="B3") %>%
