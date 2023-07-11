@@ -37,19 +37,19 @@ red_list_info<- function(taxonomy, assessment, common_names){
 
   # Fix column names
   base::colnames(x)<- c("internalTaxonId", "CommonName", "ScientificName",
-    "GlobalRedListCategory", "AssessAgainstA1c_A1d",
+    "GlobalRedListCategory", "AssessAgainstA1c_A1d","YearOfSiteValues",
     "AssessmentParameter", "Source", "DerivationOfEstimate", "SourceOfData",
-    "Range_Restricted", "Eco_BioRestricted","YearOfSiteValues","phylum",
+    "Range_Restricted", "Eco_BioRestricted","phylum",
     "class","order","family")
 
   #Fix values
   x$GlobalRedListCategory<- base::ifelse(x[,4] == "Endangered", "Endangered (EN)",
-    base::ifelse(x[,5] == "Least Concern", "Least Concern (LC)",
-      base::ifelse(x[,5] == "Data Deficient", "Data Deficient (DD)",
-        base::ifelse(x[,5] == "Critically Endangered", "Critically Endangered (CR)",
-          base::ifelse(x[,5] == "Vulnerable", "Vulnerable (VU)",
-            base::ifelse(x[,5] == "Near Threatened", "Near Threatened (NT)",
-              base::ifelse(x[,5] %in% c("Unknown", NA), "Not assessed", "Old or Extinct")))))))
+    base::ifelse(x[,4] == "Least Concern", "Least Concern (LC)",
+      base::ifelse(x[,4] == "Data Deficient", "Data Deficient (DD)",
+        base::ifelse(x[,4] == "Critically Endangered", "Critically Endangered (CR)",
+          base::ifelse(x[,4] == "Vulnerable", "Vulnerable (VU)",
+            base::ifelse(x[,4] == "Near Threatened", "Near Threatened (NT)",
+              base::ifelse(x[,4] %in% c("Unknown", NA), "Not assessed", "Old or Extinct")))))))
 
 
   x$AssessmentParameter<- "(iv) range"
