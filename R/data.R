@@ -232,34 +232,56 @@
 #' to assist examples in several functions.  
 #' 
 #' @format Object of class sf and data frame with 92 rows and 39 variables: 
-#'    \code{SiteID},
-#'    \code{LEGEND},
-#'    \code{ScientificName},
-#'    \code{internalTaxonId},
-#'    \code{CommonName},
-#'    \code{TaxonomicGroup_KBA_dataForm},
-#'    \code{GlobalRedListCategory},
-#'    \code{AssessAgainstA1c_A1d},
-#'    \code{AssessmentParameter},
-#'    \code{Source},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{SiteID},
-#'    \code{geom}
+#'    \code{SiteID},\code{LEGEND},\code{ScientificName},\code{internalTaxonId},
+#'    \code{CommonName},\code{GlobalRedListCategory},\code{AssessAgainstA1c_A1d},
+#'    \code{YearOfSiteValues},\code{AssessmentParameter},\code{DerivationOfEstimate},
+#'    \code{SourceOfData},\code{Range_Restricted},\code{Eco_BioRestrictedeID},
+#'    \code{phylum},\code{class},\code{order},\code{superfamily},\code{family},
+#'    \code{TaxonomicGroup},\code{rr_size},\code{B2_RR},\code{Eco_bio_system},
+#'    \code{GlobalRange}, \code{RR_determined},\code{SiteID},\code{Eco_bio_list},
+#'    \code{Eco_BioName},\code{SiteRange},\code{proportion},\code{Criterion_A1},
+#'    \code{Criterion_B1},\code{Criterion_B2},\code{Criterion_B3},\code{Criteria},
+#'    \code{nB2},\code{site_B2},\code{nB3},\code{site_B3},\code{geom}
 #'  \describe{
-#'  \item{id}{unique id of each grid cell}
-#'  \item{geom}{geometry of the polygons}
+#'    \item{SiteID}{}
+#'    \item{LEGEND}{}
+#'    \item{ScientificName}{}
+#'    \item{internalTaxonId}{}
+#'    \item{CommonName}{}
+#'    \item{GlobalRedListCategory}{}
+#'    \item{AssessAgainstA1c_A1d}{}
+#'    \item{YearOfSiteValues}{}
+#'    \item{AssessmentParameter}{}
+#'    \item{DerivationOfEstimate}{}
+#'    \item{SourceOfData}{}
+#'    \item{Range_Restricted}{}
+#'    \item{Eco_BioRestrictedeID}{}
+#'    \item{phylum}{}
+#'    \item{class}{}
+#'    \item{order}{}
+#'    \item{superfamily}{}
+#'    \item{family}{}
+#'    \item{TaxonomicGroup}{}
+#'    \item{rr_size}{}
+#'    \item{B2_RR}{}
+#'    \item{Eco_bio_system}{}
+#'    \item{GlobalRange}{}
+#'    \item{RR_determined}{}
+#'    \item{SiteID}{}
+#'    \item{Eco_bio_list}{}
+#'    \item{Eco_BioName}{}
+#'    \item{SiteRange}{}
+#'    \item{proportion}{}
+#'    \item{Criterion_A1}{}
+#'    \item{Criterion_B1}{}
+#'    \item{Criterion_B2}{}
+#'    \item{Criterion_B3}{}
+#'    \item{Criteria}{}
+#'    \item{nB2}{}
+#'    \item{site_B2}{}
+#'    \item{nB3}{}
+#'    \item{site_B3}{}
+#'    \item{geom}{}
 #' }
 #' 
 "triggers_gis"
