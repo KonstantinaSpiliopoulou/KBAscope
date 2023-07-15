@@ -28,42 +28,42 @@ eco_bio_check<- function(x,ecoregion= NULL,eco_name=NULL,bioregion=NULL,bio_name
   eco_bioregion_restricted=.=NULL
 
   #Create function to apply per species
-  eco<- function(x) {
+  eco<- function(y) {
     #Check first if species name is in the file provided by the KBA programme
     if(unique(x$ScientificName) %in% eco_bioregion_restricted$scientific_name){
 
 
       if(eco_bioregion_restricted$Restricted.to.Terrestrial.ecoregion[which(
-        eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
-          x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
+        eco_bioregion_restricted$scientific_name==y$ScientificName)]=="TRUE"){
+          y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
             Eco_BioName=eco_bioregion_restricted$terrestrial_ecoregion_name[which(
-            eco_bioregion_restricted$scientific_name==x$ScientificName)])
+            eco_bioregion_restricted$scientific_name==y$ScientificName)])
       }
       if(eco_bioregion_restricted$Restricted.to.a.FW.ecoregion[which(
-        eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
-          x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
+        eco_bioregion_restricted$scientific_name==y$ScientificName)]=="TRUE"){
+          y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
             Eco_BioName=eco_bioregion_restricted$freshwater_ecoregion_name[which(
-            eco_bioregion_restricted$scientific_name==x$ScientificName)])
+            eco_bioregion_restricted$scientific_name==y$ScientificName)])
       }
       if(eco_bioregion_restricted$Restricted.to.marine.ecoregion[which(
-        eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
-          x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
+        eco_bioregion_restricted$scientific_name==y$ScientificName)]=="TRUE"){
+          y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
             Eco_BioName=eco_bioregion_restricted$marine_ecoregion_name[which(
-            eco_bioregion_restricted$scientific_name==x$ScientificName)])
+            eco_bioregion_restricted$scientific_name==y$ScientificName)])
       }
       if(eco_bioregion_restricted$Restricted.to.FW.bioregion[which(
-        eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
-          x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="Yes",
+        eco_bioregion_restricted$scientific_name==y$ScientificName)]=="TRUE"){
+          y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="Yes",
             Eco_BioName=eco_bioregion_restricted$freshwater_bioregion_name[which(
-            eco_bioregion_restricted$scientific_name==x$ScientificName)])
+            eco_bioregion_restricted$scientific_name==y$ScientificName)])
       }
       if(eco_bioregion_restricted$Restricted.to.Marine.Bioregion[which(
-        eco_bioregion_restricted$scientific_name==x$ScientificName)]=="TRUE"){
-        x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="Yes",
+        eco_bioregion_restricted$scientific_name==y$ScientificName)]=="TRUE"){
+        y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="Yes",
           Eco_BioName=eco_bioregion_restricted$marine_bioregion_name[which(
-          eco_bioregion_restricted$scientific_name==x$ScientificName)])
+          eco_bioregion_restricted$scientific_name==y$ScientificName)])
       }
-      base::return(x)
+      base::return(y)
 
 
     #If not, intersect species distributions with relevant ecoregion or bioregion
@@ -71,34 +71,34 @@ eco_bio_check<- function(x,ecoregion= NULL,eco_name=NULL,bioregion=NULL,bio_name
 
 
       #Check if ecoregion or bioregion is needed and intersect
-      if(unique(x$TaxonomicGroup %in% c("Actinopterygii","Aves","Cephalaspidomorphi",
+      if(unique(y$TaxonomicGroup %in% c("Actinopterygii","Aves","Cephalaspidomorphi",
         "Ceratophyllales","Chondrichthyes","Mammalia","Myxini","Sarcoptergyii"))){
         if(base::is.null(bioregion)){
-          x<- dplyr::mutate(x,Eco_BioRestricted= "No",Eco_bio_list="No",Eco_BioName="")
+          y<- dplyr::mutate(y,Eco_BioRestricted= "No",Eco_bio_list="No",Eco_BioName="")
         }else{
           temp<- data.frame(sf::st_intersects(sf::st_make_valid(bioregion),
-          sf::st_make_valid(x))) %>% dplyr::select(1) %>% dplyr::distinct()
+          sf::st_make_valid(y))) %>% dplyr::select(1) %>% dplyr::distinct()
         #If intersection shows that species is restricted
         if(nrow(temp)==1){
-          x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="No",
+          y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="No",
             Eco_BioName= bioregion[[bio_name]][temp[1,1]])
         } else {
-          x<- dplyr::mutate(x,Eco_BioRestricted= "No",Eco_bio_list="No",Eco_BioName="")
+          y<- dplyr::mutate(y,Eco_BioRestricted= "No",Eco_bio_list="No",Eco_BioName="")
         }
         }
       } else {
         temp<- data.frame(sf::st_intersects(sf::st_make_valid(ecoregion),
-          sf::st_make_valid(x))) %>% dplyr::select(1) %>% dplyr::distinct()
+          sf::st_make_valid(y))) %>% dplyr::select(1) %>% dplyr::distinct()
         #If intersection shows that species is restricted
         if(nrow(temp)==1){
-          x<- x %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="No",
+          y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="No",
                                   Eco_BioName= ecoregion[[eco_name]][temp[1,1]])
         } else {
-          x<- dplyr::mutate(x,Eco_BioRestricted= "No",Eco_bio_list="No",Eco_BioName="")
+          y<- dplyr::mutate(y,Eco_BioRestricted= "No",Eco_bio_list="No",Eco_BioName="")
         }
       }
 
-    base::return(x)
+    base::return(y)
     }
   }
 
