@@ -61,9 +61,9 @@ species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps")
       base::ifelse(class %in% tax_groups$Taxonomic.group.level, class,
         base::ifelse(order %in% tax_groups$Taxonomic.group.level, order,
           base::ifelse(family %in% tax_groups$family, 
-                       tax_groups$Taxonomic.group.level[which(tax_groups$family==family)],
-              "NA"))))) %>% base::data.frame()
-
+          tax_groups$Taxonomic.group.level[which(tax_groups$family==family)],"NA"))))) %>%
+            base::data.frame()
+  info$TaxonomicGroup[is.na(info$TaxonomicGroup)] <- "NA"
     #remove columns
     if(unique(c("PRESENCE","ORIGIN","SEASONAL") %in% names(info))){
       info<- dplyr::select(info,-PRESENCE,-ORIGIN,-SEASONAL) %>% unique()
