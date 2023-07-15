@@ -137,9 +137,9 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
 	x<- x %>% base::split(x$ScientificName) %>% base::lapply(., range_maps) %>%
      base::do.call(base::rbind,.)
 	#write outputs
-	x %>% base::split(x$ScientificName) %>% base::lapply(., function(y)
-     sf::st_write(y,base::paste0("input/species/",system,"/",type,
-     "/",base::unique(y$ScientificName),".gpkg"), row.names=FALSE))
+	x %>% base::split(x$ScientificName) %>% base::lapply(., function(z)
+     sf::st_write(z,base::paste0("input/species/",system,"/",type,
+     "/",base::unique(z$ScientificName),".gpkg"), row.names=FALSE))
   }
 
   #Take cases according to data type

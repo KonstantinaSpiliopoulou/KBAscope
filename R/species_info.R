@@ -38,7 +38,8 @@ species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps")
     Apply.Ecoregion..B3a..or.bioregion..B3b..restriction=NULL,Notes=NULL)
   tax_groups$Area.for.25..B2.RR.definition..km2....otherwise.use.10.000.km2[base::which(
     tax_groups$Area.for.25..B2.RR.definition..km2....otherwise.use.10.000.km2=="")]<- "10,000"
-
+  tax_groups<- dplyr::left_join(tax_groups, superfamily_lookup,
+                                by= c("Superfamily" = "superfamily"))
   #drop data geometry
   x<- sf::st_drop_geometry(x)
 
@@ -50,8 +51,8 @@ species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps")
       Source="", DerivationOfEstimate="",SourceOfData="",Range_Restricted="",
       Eco_BioRestricted="", YearOfSiteValues="") %>% base::unique()
   } else{
-    info<- base::merge(x,taxonomy_info, by.x= name, by.y="ScientificName", all.x=TRUE) %>%
-      dplyr::rename(ScientificName=name)
+    info<- base::merge(x,taxonomy_info, by.x= name, by.y="ScientificName", all.x=TRUE)
+    base::colnames(info)[base::which(names(info) == name)]<- "ScientificName"
   }
 
   #find taxonomic group
@@ -59,8 +60,9 @@ species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps")
     base::ifelse(phylum %in% tax_groups$Taxonomic.group.level, phylum,
       base::ifelse(class %in% tax_groups$Taxonomic.group.level, class,
         base::ifelse(order %in% tax_groups$Taxonomic.group.level, order,
-          base::ifelse(superfamily %in% tax_groups$Taxonomic.group.level, superfamily,
-            "NA"))))) %>% base::data.frame()
+          base::ifelse(family %in% tax_groups$family, 
+                       tax_groups$Taxonomic.group.level[which(tax_groups$family==family)],
+              "NA"))))) %>% base::data.frame()
 
     #remove columns
     if(unique(c("PRESENCE","ORIGIN","SEASONAL") %in% names(info))){

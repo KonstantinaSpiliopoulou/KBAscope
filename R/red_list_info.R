@@ -31,16 +31,16 @@ red_list_info<- function(taxonomy, assessment, common_names){
   x<- x[,c("internalTaxonId","name","scientificName.x",
     "redlistCategory","redlistCriteria","assessmentDate","phylumName",
     "className","orderName","familyName")]
-  empty_cols<- c(paste0("c",11:17))
+  empty_cols<- c(paste0("c",11:16))
   x[,empty_cols]<- NA
-  x<- x[, c(1:6,11:16,7:9,17,10)]
+  x<- x[, c(1:6,11:16,7:10)]
 
   # Fix column names
   base::colnames(x)<- c("internalTaxonId", "CommonName", "ScientificName",
     "GlobalRedListCategory", "AssessAgainstA1c_A1d","YearOfSiteValues",
     "AssessmentParameter", "Source", "DerivationOfEstimate", "SourceOfData",
     "Range_Restricted", "Eco_BioRestricted","phylum",
-    "class","order","superfamily","family")
+    "class","order","family")
 
   #Fix values
   x$GlobalRedListCategory<- base::ifelse(x[,4] == "Endangered", "Endangered (EN)",
@@ -80,7 +80,7 @@ red_list_info<- function(taxonomy, assessment, common_names){
   x$order<- base::paste(base::toupper(base::substr(x$order, 1, 1)),
                         base::tolower(base::substr(x$order, 2,
                         base::nchar(x$order))), sep="")
-
+  
   x$family<- base::paste(base::toupper(base::substr(x$family, 1, 1)),
                          base::tolower(base::substr(x$family, 2,
                         base::nchar(x$family))), sep="")

@@ -52,7 +52,7 @@ view_results <- function(x,y, pic=TRUE) {
     grp <- df1.naomit$TaxonomicGroup
     h.adjust <- 0.1*max(df1$n)
     
-    pic_size= base::ifelse(length(grp)<=5, 0.3, 6)
+    pic_size= base::ifelse(length(grp)<=5, 0.1, 6)
     
     
     # loop to integrate the pics #
