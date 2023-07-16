@@ -4,8 +4,6 @@
 #'          If the species are not assessed in the IUCN Red List of Threatened
 #'          Species, x should contain the taxonomy of the species.
 #' @param name Object of class character. The column containing the species name.
-#' @param type Object of class character to identify the type of distribution
-#'            data of x. Takes values "AOO", "AOH","localities" or "range_maps".
 #' @param red_list If TRUE data are assessed in the IUCN Red List of Threatened
 #'                Species. If FALSE data are not assessed in the IUCN Red List
 #'                of Threatened Species.
@@ -22,8 +20,7 @@
 #' }
 #'
 #'
-species_info<- function(x,name,type= c("AOO", "AOH", "localities", "range_maps"),
-                        red_list=TRUE,taxonomy_info=NULL){
+species_info<- function(x,name, red_list=TRUE,taxonomy_info=NULL){
 
   #Set parameters
   Sort.Order=PRESENCE=ORIGIN=SEASONAL=LEGEND=phylum=family=TaxonomicGroup=NULL

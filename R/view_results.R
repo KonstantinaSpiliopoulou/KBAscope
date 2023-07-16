@@ -5,6 +5,7 @@
 #' @param y Object of class sf and data frame. The "ptrigger_species.gpkg"
 #'          file generated from KBAscope::potential_kbas.
 #' @param pic Object of class logical. Takes values TRUE for adding a taxonomy picture or FALSE for not adding a taxonomy picture.
+#' @param pic_size Object of class numeric that defines the size of taxonomy picture.
 #'
 #' @return Creates figures of summary results.
 #' @export
@@ -16,7 +17,7 @@
 #' }
 #'
 
-view_results <- function(x,y, pic=TRUE) {
+view_results <- function(x,y, pic=TRUE, pic_size=6) {
   
   #Set parameters
   TaxonomicGroup=ScientificName=Taxonomic.group.level=.=km=SiteID=n=NULL
@@ -37,7 +38,7 @@ view_results <- function(x,y, pic=TRUE) {
                          x.text.angle = 40,
                          ylab = "Number of\nTrigger Species\n",
                          xlab = FALSE,
-                         lab.size=11
+                         lab.size=10
   )+
     ggpubr::font("x.text", size = 9) + ggplot2::scale_y_continuous(expand = c(0,0))
   
@@ -52,7 +53,6 @@ view_results <- function(x,y, pic=TRUE) {
     grp <- df1.naomit$TaxonomicGroup
     h.adjust <- 0.1*max(df1$n)
     
-    pic_size= base::ifelse(length(grp)<=5, 0.1, 6)
     
     
     # loop to integrate the pics #
