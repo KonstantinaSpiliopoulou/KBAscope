@@ -4,13 +4,7 @@
 \alias{species_info}
 \title{Creates a data frame with all the necessary information to apply KBA criteria.}
 \usage{
-species_info(
-  x,
-  name,
-  type = c("AOO", "AOH", "localities", "range_maps"),
-  red_list = TRUE,
-  taxonomy_info = NULL
-)
+species_info(x, name, red_list = TRUE, taxonomy_info = NULL)
 }
 \arguments{
 \item{x}{Object of class data frame that contains the list of species.
@@ -18,9 +12,6 @@ If the species are not assessed in the IUCN Red List of Threatened
 Species, x should contain the taxonomy of the species.}
 
 \item{name}{Object of class character. The column containing the species name.}
-
-\item{type}{Object of class character to identify the type of distribution
-data of x. Takes values "AOO", "AOH","localities" or "range_maps".}
 
 \item{red_list}{If TRUE data are assessed in the IUCN Red List of Threatened
 Species. If FALSE data are not assessed in the IUCN Red List

@@ -4,7 +4,7 @@
 \alias{view_results}
 \title{Visualize results.}
 \usage{
-view_results(x, y, pic = TRUE)
+view_results(x, y, pic = TRUE, pic_size = 6)
 }
 \arguments{
 \item{x}{Object of class data frame. The "ptrigger_species.csv" file
@@ -14,6 +14,8 @@ generated from KBAscope::potential_kbas.}
 file generated from KBAscope::potential_kbas.}
 
 \item{pic}{Object of class logical. Takes values TRUE for adding a taxonomy picture or FALSE for not adding a taxonomy picture.}
+
+\item{pic_size}{Object of class numeric that defines the size of taxonomy picture.}
 }
 \value{
 Creates figures of summary results.
