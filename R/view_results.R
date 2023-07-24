@@ -36,7 +36,7 @@ view_results <- function(x,y, pic=TRUE, pic_size=6, font_size=9) {
                          color = "#D0B800",
                          sort.val = "desc",
                          ylim=c(0,z),
-                         x.text.angle = 70,
+                         x.text.angle = 80,
                          ylab = "Number of Species\n that Trigger KBA Criteria\n",
                          xlab = FALSE,
                          lab.size=10) +
@@ -112,7 +112,7 @@ view_results <- function(x,y, pic=TRUE, pic_size=6, font_size=9) {
   table_grob1 <- gridExtra::tableGrob(b1,
     cols = NULL, rows = rep('', nrow(b1)),theme = gridExtra::ttheme_minimal())
   ## title
-  title_grob1 <- grid::textGrob("Potential Site Stats", gp = grid::gpar(fontsize = 18))
+  title_grob1 <- grid::textGrob("Potential KBAs Stats", gp = grid::gpar(fontsize = 18))
   ## add title
   table_grob1 <- gtable::gtable_add_rows(table_grob1,
     heights = grid::grobHeight(title_grob1) +grid::unit(5,'mm'), pos = 0)
