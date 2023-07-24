@@ -7,10 +7,10 @@
 view_results(x, y, pic = TRUE, pic_size = 6, font_size = 9)
 }
 \arguments{
-\item{x}{Object of class data frame. The "ptrigger_species.csv" file
-generated from KBAscope::potential_kbas.}
+\item{x}{Object of class sf and data frame. The "ptrigger_species.gpkg"
+file generated from KBAscope::potential_kbas.}
 
-\item{y}{Object of class sf and data frame. The "ptrigger_species.gpkg"
+\item{y}{Object of class sf and data frame. The "potential_KBAs.gpkg"
 file generated from KBAscope::potential_kbas.}
 
 \item{pic}{Object of class logical. Takes values TRUE for adding a taxonomy picture or FALSE for not adding a taxonomy picture.}
