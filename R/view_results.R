@@ -37,7 +37,7 @@ view_results <- function(x,y, pic=TRUE, pic_size=6, font_size=9) {
                          sort.val = "desc",
                          ylim=c(0,z),
                          x.text.angle = 40,
-                         ylab = "Number of\nTrigger Species\n",
+                         ylab = "Number of Species\n that Trigger KBA Criteria\n",
                          xlab = FALSE,
                          lab.size=10) +
     ggpubr::font("x.text", size = font_size) + 
@@ -111,7 +111,7 @@ view_results <- function(x,y, pic=TRUE, pic_size=6, font_size=9) {
   table_grob1 <- gridExtra::tableGrob(b1,
     cols = NULL, rows = rep('', nrow(b1)),theme = gridExtra::ttheme_minimal())
   ## title
-  title_grob1 <- grid::textGrob("pKBAs stats", gp = grid::gpar(fontsize = 18))
+  title_grob1 <- grid::textGrob("Potential Site Stats", gp = grid::gpar(fontsize = 18))
   ## add title
   table_grob1 <- gtable::gtable_add_rows(table_grob1,
     heights = grid::grobHeight(title_grob1) +grid::unit(5,'mm'), pos = 0)
@@ -124,7 +124,7 @@ view_results <- function(x,y, pic=TRUE, pic_size=6, font_size=9) {
   b2<- x %>% dplyr::group_by(SiteID)%>%
     dplyr::summarise(n=dplyr::n_distinct(ScientificName)) %>%
     dplyr::arrange(dplyr::desc(n)) %>%
-    dplyr::rename("Site ID"="SiteID", "Number of\n trigger species"="n")
+    dplyr::rename("Site ID"="SiteID", "Number of\n Species"="n")
   b2<- b2[1:5,1:2]
   base::row.names(b2)<- c("1","2","3","4","5")
   
@@ -140,7 +140,7 @@ view_results <- function(x,y, pic=TRUE, pic_size=6, font_size=9) {
   
   
   ## title
-  title_grob2 <- grid::textGrob("Top 5 pKBAs with the highest\nnumber of trigger species",
+  title_grob2 <- grid::textGrob("Sites with the highest number of\nspecies triggering KBA criteria",
     gp = grid::gpar(fontsize = 17))
   ## add title
   table_grob2 <- gtable::gtable_add_rows(table_grob2,
