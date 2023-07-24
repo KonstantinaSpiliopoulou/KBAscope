@@ -22,6 +22,7 @@ view_results <- function(x,y, pic=TRUE, pic_size=6, font_size=9) {
   #Set parameters
   TaxonomicGroup=ScientificName=Taxonomic.group.level=.=km=SiteID=n=NULL
   x<- x %>% sf::st_drop_geometry()
+  x$TaxonomicGroup[which(x$TaxonomicGroup=="NA")]<- NA
   #Create basis for top right info
   df1<- x %>% dplyr::group_by(TaxonomicGroup) %>%
     dplyr::summarise(n=dplyr::n_distinct(ScientificName))
@@ -46,13 +47,13 @@ view_results <- function(x,y, pic=TRUE, pic_size=6, font_size=9) {
   if (pic==TRUE) {
     # select group and y lim 
     df1.naomit <- stats::na.omit(df1)
+    #df1.naomit<- df1.naomit %>% dplyr::filter(TaxonomicGroup!="NA")
     df1.naomit <- df1.naomit[order(df1.naomit$n, decreasing=T),] # remove NA if applies 
     
     temp1 <- df1.naomit$n 
     temp2 <- 1:length(temp1)
-    grp <- df1.naomit$TaxonomicGroup
+    grp <- df1.naomit$TaxonomicGroup 
     h.adjust <- 0.1*max(df1$n)
-    
     
     
     # loop to integrate the pics #
