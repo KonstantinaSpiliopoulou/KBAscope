@@ -6,6 +6,7 @@
 #'          file generated from KBAscope::potential_kbas.
 #' @param pic Object of class logical. Takes values TRUE for adding a taxonomy picture or FALSE for not adding a taxonomy picture.
 #' @param pic_size Object of class numeric that defines the size of taxonomy picture.
+#' @param font_size Object of class numeric that defines the font size of x axis text.
 #'
 #' @return Creates figures of summary results.
 #' @export
@@ -17,7 +18,7 @@
 #' }
 #'
 
-view_results <- function(x,y, pic=TRUE, pic_size=6) {
+view_results <- function(x,y, pic=TRUE, pic_size=6, font_size=9) {
   
   #Set parameters
   TaxonomicGroup=ScientificName=Taxonomic.group.level=.=km=SiteID=n=NULL
@@ -38,9 +39,9 @@ view_results <- function(x,y, pic=TRUE, pic_size=6) {
                          x.text.angle = 40,
                          ylab = "Number of\nTrigger Species\n",
                          xlab = FALSE,
-                         lab.size=10
-  )+
-    ggpubr::font("x.text", size = 9) + ggplot2::scale_y_continuous(expand = c(0,0))
+                         lab.size=10) +
+    ggpubr::font("x.text", size = font_size) + 
+    ggplot2::scale_y_continuous(expand = c(0,0))
   
   #Add taxonomy picture to columns
   if (pic==TRUE) {
