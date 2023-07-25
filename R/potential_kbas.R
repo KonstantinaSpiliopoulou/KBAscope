@@ -23,14 +23,14 @@ potential_kbas<- function(x,system="terrestrial", output=".gpkg"){
   #Set parameters
   Criterion_B2=Criterion_B3=SiteID=TaxonomicGroup=ScientificName=nB2=B2_RR=NULL
   site_B2=site_B3=geom=nB3=.=Criteria=NULL
-
+  sf::sf_use_s2(FALSE)
   #Load all files under output folder
   base::setwd(base::paste0(x,"output/",system))
   files<- base::list.files(recursive=T)
   ptriggers<- base::lapply(files,
     function(x) sf::st_read(x,stringsAsFactors=FALSE)) %>%
     plyr::ldply(data.frame) %>% sf::st_sf() %>% sf::st_buffer(., 0.0) %>% 
-    sf::st_make_valid()
+    sf::st_make_valid() %>% sf::st_transform(crs = 4326)
   
   #Filter out species that meet only B2 and B3 criteria but do not meet the site threshold
   B2.B3<- ptriggers %>% dplyr::filter(Criterion_B2=="B2"| Criterion_B3=="B3") %>%
