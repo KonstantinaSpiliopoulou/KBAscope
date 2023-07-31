@@ -38,6 +38,7 @@ Imports:
     sf,
     stats,
     stringr,
+    tidyselect,
     units
 Depends: 
     R (>= 2.10)
