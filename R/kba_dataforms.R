@@ -39,12 +39,13 @@ kba_dataforms<- function(x){
   b<- x %>% dplyr::select(tidyselect::all_of(vars))
   vars<- c("AssessAgainstA1c_A1d","Range_Restricted","RR_determined",
            "Eco_BioRestricted","Eco_bio_system","Eco_BioName",
-           "Eco_bio_list","AssessAgainstA1c_A1d","Range_Restricted","RR_determined",
-           "Eco_BioRestricted","Eco_bio_system","Eco_BioName","Eco_bio_list")
+           "Eco_bio_list")
   c<- x %>% dplyr::select(tidyselect::all_of(vars))
-  vars<- c("AssessmentParameter", "GlobalRange", "GlobalRange","GlobalRange",
-           "DerivationOfEstimate")
+  vars<- c("AssessmentParameter", "GlobalRange")
   d<- x %>% dplyr::select(tidyselect::all_of(vars))
+  vars<- c("GlobalRange")
+  d1<- x %>% dplyr::select(tidyselect::all_of(vars))
+  d2<- x %>% dplyr::select(tidyselect::all_of("DerivationOfEstimate"))
   e<- x %>% dplyr::select(tidyselect::all_of("proportion"))
 
   #Load KBA data form
@@ -61,12 +62,17 @@ kba_dataforms<- function(x){
                         startRow = 5, startCol = 13, colNames = FALSE)
   openxlsx::writeData(wb, x=d, sheet = "3. Biodiversity elements data",
                         startRow = 5, startCol = 21, colNames = FALSE)
+  openxlsx::writeData(wb, x=d1, sheet = "3. Biodiversity elements data",
+                      startRow = 5, startCol = 23, colNames = FALSE)
+  openxlsx::writeData(wb, x=d1, sheet = "3. Biodiversity elements data",
+                      startRow = 5, startCol = 24, colNames = FALSE)
+  openxlsx::writeData(wb, x=d2, sheet = "3. Biodiversity elements data",
+                      startRow = 5, startCol = 25, colNames = FALSE)
   openxlsx::writeData(wb, x=e, sheet = "3. Biodiversity elements data",
                         startRow = 5, startCol = 62, colNames = FALSE)
 
   #write xlsx file
-  openxlsx::saveWorkbook(wb, 
-    "C:/Users/Kspil/OneDrive/Text/Papers/KBAs-Greece/KBA_scoping_script/KBA_dataform.xlsx", 
+  openxlsx::saveWorkbook(wb, "results/KBA_DataForm.xlsx", 
     overwrite = TRUE)
 
 }
