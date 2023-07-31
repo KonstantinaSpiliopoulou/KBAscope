@@ -25,51 +25,37 @@ eco_bio_check<- function(x,ecoregion= NULL,eco_name=NULL,bioregion=NULL,bio_name
 
   #set some parameters
   sf::sf_use_s2(FALSE)
-  eco_bioregion_restricted=.=NULL
+  scientific_name=.=NULL
 
   #Create function to apply per species
-  eco<- function(y) {
+  eco<- function(y, df=eco_bioregion_restricted) {
     #Check first if species name is in the file provided by the KBA programme
-    if(unique(x$ScientificName) %in% eco_bioregion_restricted$scientific_name){
-
-
-      if(eco_bioregion_restricted$Restricted.to.Terrestrial.ecoregion[which(
-        eco_bioregion_restricted$scientific_name==y$ScientificName)]=="TRUE"){
-          y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
-            Eco_BioName=eco_bioregion_restricted$terrestrial_ecoregion_name[which(
-            eco_bioregion_restricted$scientific_name==y$ScientificName)])
+    if(base::unique(y$ScientificName) %in% df$scientific_name){
+      df<- df %>% dplyr::filter(scientific_name==unique(y$ScientificName))
+      
+      if(df$Restricted.to.Terrestrial.ecoregion=="TRUE"){
+        y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
+          Eco_BioName=df$terrestrial_ecoregion_name)
       }
-      if(eco_bioregion_restricted$Restricted.to.a.FW.ecoregion[which(
-        eco_bioregion_restricted$scientific_name==y$ScientificName)]=="TRUE"){
-          y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
-            Eco_BioName=eco_bioregion_restricted$freshwater_ecoregion_name[which(
-            eco_bioregion_restricted$scientific_name==y$ScientificName)])
+      if(df$Restricted.to.a.FW.ecoregion=="TRUE"){
+        y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
+          Eco_BioName=df$freshwater_ecoregion_name)
       }
-      if(eco_bioregion_restricted$Restricted.to.marine.ecoregion[which(
-        eco_bioregion_restricted$scientific_name==y$ScientificName)]=="TRUE"){
-          y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
-            Eco_BioName=eco_bioregion_restricted$marine_ecoregion_name[which(
-            eco_bioregion_restricted$scientific_name==y$ScientificName)])
+      if(df$Restricted.to.marine.ecoregion=="TRUE"){
+        y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3a",Eco_bio_list="Yes",
+          Eco_BioName=df$marine_ecoregion_name)
       }
-      if(eco_bioregion_restricted$Restricted.to.FW.bioregion[which(
-        eco_bioregion_restricted$scientific_name==y$ScientificName)]=="TRUE"){
-          y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="Yes",
-            Eco_BioName=eco_bioregion_restricted$freshwater_bioregion_name[which(
-            eco_bioregion_restricted$scientific_name==y$ScientificName)])
-      }
-      if(eco_bioregion_restricted$Restricted.to.Marine.Bioregion[which(
-        eco_bioregion_restricted$scientific_name==y$ScientificName)]=="TRUE"){
+      if(df$Restricted.to.FW.bioregion=="TRUE"){
         y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="Yes",
-          Eco_BioName=eco_bioregion_restricted$marine_bioregion_name[which(
-          eco_bioregion_restricted$scientific_name==y$ScientificName)])
+          Eco_BioName=df$freshwater_bioregion_name)
+      }
+      if(df$Restricted.to.Marine.Bioregion=="TRUE"){
+        y<- y %>% dplyr::mutate(Eco_BioRestricted= "B3b",Eco_bio_list="Yes",
+          Eco_BioName=df$marine_bioregion_name)
       }
       base::return(y)
-
-
     #If not, intersect species distributions with relevant ecoregion or bioregion
     } else {
-
-
       #Check if ecoregion or bioregion is needed and intersect
       if(unique(y$TaxonomicGroup %in% c("Actinopterygii","Aves","Cephalaspidomorphi",
         "Ceratophyllales","Chondrichthyes","Mammalia","Myxini","Sarcoptergyii"))){
@@ -96,9 +82,9 @@ eco_bio_check<- function(x,ecoregion= NULL,eco_name=NULL,bioregion=NULL,bio_name
         } else {
           y<- dplyr::mutate(y,Eco_BioRestricted= "No",Eco_bio_list="No",Eco_BioName="")
         }
+        base::return(y)
       }
-
-    base::return(y)
+      base::return(y)
     }
   }
 

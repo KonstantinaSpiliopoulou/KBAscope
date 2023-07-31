@@ -34,8 +34,8 @@ save_triggers<- function(x,type=c("AOO", "AOH", "localities",
     #Different approach for population data and the rest of the parameters
     if(type=="population"){
       x %>% dplyr::filter(Criteria!="") %>% base::split(.,"ScientificName") %>%
-        base::lapply(., function(x) sf::st_write(x,base::paste0(
-          path,base::unique(x$ScientificName),output),
+        base::lapply(., function(y) sf::st_write(y,base::paste0(
+          path,"/",base::unique(y$ScientificName),output),
           stringsAsFactors=FALSE))
     }else{
       x %>% dplyr::filter(Criteria!="") %>% sf::st_write(.,base::paste0(

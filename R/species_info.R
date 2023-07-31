@@ -24,7 +24,7 @@ species_info<- function(x,name, red_list=TRUE,taxonomy_info=NULL){
 
   #Set parameters
   Sort.Order=PRESENCE=ORIGIN=SEASONAL=LEGEND=phylum=family=TaxonomicGroup=NULL
-  superfamily=ASSESSMENT=ID_NO=COMPILER=YEAR=CITATION=NULL
+  superfamily=ASSESSMENT=ID_NO=COMPILER=YEAR=CITATION=.=NULL
   #Edit data from KBA resources
   tax_groups<- dplyr::filter(taxonomic_groups,!is.na(Sort.Order)) %>%
     dplyr::add_row(Sort.Order=355,Kingdom=NULL,Phylum=NULL,Class=NULL,
@@ -38,17 +38,18 @@ species_info<- function(x,name, red_list=TRUE,taxonomy_info=NULL){
   tax_groups<- dplyr::left_join(tax_groups, superfamily_lookup,
                                 by= c("Superfamily" = "superfamily"))
   #drop data geometry
-  x<- sf::st_drop_geometry(x)
+  x<- sf::st_drop_geometry(x)%>% dplyr::rename("ScientificName" = all_of(name))
 
   #Cases when red lited or not
   if (red_list==FALSE){
-    info<- x %>% base::merge(x,taxonomy_info, by.x= name, by.y="ScientificName", all.x=TRUE) %>%
-      dplyr::rename(ScientificName=name) %>% dplyr::mutate(internalTaxonId="", CommonName="",
-      GlobalRedListCategory="Not assessed",AssessAgainstA1c_A1d="No", AssessmentParameter="",
-      Source="", DerivationOfEstimate="",SourceOfData="",Range_Restricted="",
-      Eco_BioRestricted="", YearOfSiteValues="") %>% base::unique()
+    info<- x %>% dplyr::left_join(.,taxonomy_info) %>%
+      dplyr::rename(ScientificName=all_of(name)) %>% dplyr::mutate(internalTaxonId="", 
+        CommonName="",GlobalRedListCategory="Not assessed",AssessAgainstA1c_A1d="No",
+        AssessmentParameter="",Source="", DerivationOfEstimate="",
+        SourceOfData="",Range_Restricted="",Eco_BioRestricted="", 
+        YearOfSiteValues="") %>% base::unique()
   } else{
-    info<- base::merge(x,taxonomy_info, by.x= name, by.y="ScientificName", all.x=TRUE)
+    info<- x %>% dplyr::left_join(.,taxonomy_info)
     base::colnames(info)[base::which(names(info) == name)]<- "ScientificName"
   }
 

@@ -25,10 +25,10 @@ potential_kbas<- function(x,system="terrestrial", output=".gpkg"){
   site_B2=site_B3=geom=nB3=.=Criteria=NULL
   sf::sf_use_s2(FALSE)
   #Load all files under output folder
-  base::setwd(base::paste0(x,"output/",system))
-  files<- base::list.files(recursive=T)
+  files<- base::list.files(path=base::paste0(x,"/output/",system), recursive=T)
   ptriggers<- base::lapply(files,
-    function(x) sf::st_read(x,stringsAsFactors=FALSE)) %>%
+    function(y) sf::st_read(base::paste0(x,"/output/",system,"/",y),
+                            stringsAsFactors=FALSE)) %>%
     plyr::ldply(data.frame) %>% sf::st_sf() %>% sf::st_buffer(., 0.0) %>% 
     sf::st_make_valid() %>% sf::st_transform(crs = 4326)
   
@@ -52,12 +52,11 @@ potential_kbas<- function(x,system="terrestrial", output=".gpkg"){
   #Correct geometry collections
   if ("GEOMETRYCOLLECTION"%in% sf::st_geometry_type(ptriggers)== TRUE){ #start of if
     gem<- sf::st_cast(ptriggers)[which(sf::st_is(sf::st_cast(ptriggers),
-      "GEOMETRYCOLLECTION")),]
-    test<- gem %>% sf::st_buffer(., 0.0) %>% sf::st_make_valid() %>%
+    "GEOMETRYCOLLECTION")),] %>% sf::st_buffer(.,0.0)%>% sf::st_make_valid() %>%
       sf::st_cast("MULTIPOLYGON")
     ptriggers<-sf::st_cast(ptriggers)[which(!sf::st_is(sf::st_cast(ptriggers),
       "GEOMETRYCOLLECTION")),]
-    ptriggers<- base::rbind(ptriggers,test)
+    ptriggers<- base::rbind(ptriggers,gem)
   } #end of if
 
   #Polygonize grids and create potential KBA sites
@@ -65,17 +64,6 @@ potential_kbas<- function(x,system="terrestrial", output=".gpkg"){
     dplyr::summarise(geometry= sf::st_union(geom)) %>%
     base::data.frame() %>% sf::st_as_sf() %>%
     dplyr::mutate(SiteID= base::paste0("pKBA_",1:base::nrow(.)))
-
-  #Correct geometry collections
-  if ("GEOMETRYCOLLECTION"%in% sf::st_geometry_type(grid)== TRUE){ #start of if
-    gem<- sf::st_cast(grid)[which(sf::st_is(sf::st_cast(grid),
-      "GEOMETRYCOLLECTION")),]
-    test<- gem %>% sf::st_buffer(., 0.0) %>% sf::st_make_valid() %>%
-      sf::st_cast("MULTIPOLYGON")
-    grid<-sf::st_cast(grid)[which(!sf::st_is(sf::st_cast(grid),
-      "GEOMETRYCOLLECTION")),]
-    grid<- base::rbind(grid,test)
-  } #end of if
 
   #Write geopackage outputs
   sf::st_write(grid, base::paste0(x,"results/",system,"/potential_KBAs",output),

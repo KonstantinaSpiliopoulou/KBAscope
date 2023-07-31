@@ -32,14 +32,11 @@ site_calculation<- function(x, spatial_units,
       sf::st_intersection(x,.) %>% dplyr::select(-id)
     
     #Correct geometry collections
-    if ("GEOMETRYCOLLECTION"%in% sf::st_geometry_type(x)== TRUE){#start
-      gem<- sf::st_cast(x)[which(sf::st_is(sf::st_cast(x),
-        "GEOMETRYCOLLECTION")),]
-      test<- gem %>% sf::st_buffer(., 0.0) %>% sf::st_make_valid() %>%
-        sf::st_cast("MULTIPOLYGON")
-      x<-sf::st_cast(x)[which(!sf::st_is(sf::st_cast(x),
-        "GEOMETRYCOLLECTION")),]
-      x<- base::rbind(x,test)
+    if ("GEOMETRYCOLLECTION"%in% sf::st_geometry_type(x)== TRUE){ #start of if
+      gem<- sf::st_cast(x)[which(sf::st_is(sf::st_cast(x),"GEOMETRYCOLLECTION")),] %>%
+        sf::st_buffer(.,0.0)%>% sf::st_make_valid() %>% sf::st_cast("MULTIPOLYGON")
+      x<-sf::st_cast(x)[which(!sf::st_is(sf::st_cast(x), "GEOMETRYCOLLECTION")),]
+      x<- base::rbind(x,gem)
     } #end of if
     
     #calculate SiteRange
@@ -60,17 +57,6 @@ site_calculation<- function(x, spatial_units,
       dplyr::filter(id %in% base::unlist(sf::st_intersects(x,.))) %>%
       sf::st_intersection(x,.) %>% dplyr::select(-id)
     
-    #Correct geometry collections
-    if ("GEOMETRYCOLLECTION"%in% sf::st_geometry_type(x)== TRUE){#start
-      gem<- sf::st_cast(x)[which(sf::st_is(sf::st_cast(x),
-                                           "GEOMETRYCOLLECTION")),]
-      test<- gem %>% sf::st_buffer(., 0.0) %>% sf::st_make_valid() %>%
-        sf::st_cast("MULTIPOLYGON")
-      x<-sf::st_cast(x)[which(!sf::st_is(sf::st_cast(x),
-                                         "GEOMETRYCOLLECTION")),]
-      x<- base::rbind(x,test)
-    } #end of if
-    
     #calculate SiteRange
     temp1<- spatial_units %>% dplyr::mutate(id = rownames(.)) %>%
       dplyr::filter(id %in% base::unlist(sf::st_intersects(x,.))) %>%
@@ -90,16 +76,12 @@ site_calculation<- function(x, spatial_units,
       sf::st_intersection(x,.) %>% dplyr::select(-id)
     
     #Correct geometry collections
-    if ("GEOMETRYCOLLECTION"%in% sf::st_geometry_type(x)== TRUE){#start
-      gem<- sf::st_cast(x)[which(sf::st_is(sf::st_cast(x),
-                                           "GEOMETRYCOLLECTION")),]
-      test<- gem %>% sf::st_buffer(., 0.0) %>% sf::st_make_valid() %>%
-        sf::st_cast("MULTIPOLYGON")
-      x<-sf::st_cast(x)[which(!sf::st_is(sf::st_cast(x),
-                                         "GEOMETRYCOLLECTION")),]
-      x<- base::rbind(x,test)
+    if ("GEOMETRYCOLLECTION"%in% sf::st_geometry_type(x)== TRUE){ #start of if
+      gem<- sf::st_cast(x)[which(sf::st_is(sf::st_cast(x),"GEOMETRYCOLLECTION")),] %>%
+        sf::st_buffer(.,0.0)%>% sf::st_make_valid() %>% sf::st_cast("MULTIPOLYGON")
+      x<-sf::st_cast(x)[which(!sf::st_is(sf::st_cast(x), "GEOMETRYCOLLECTION")),]
+      x<- base::rbind(x,gem)
     } #end of if
-    
     
     #calculate SiteRange
     species_info<- x %>% sf::st_drop_geometry() %>%

@@ -39,7 +39,8 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
                     "Sarcopterygii","Odonata", "Ceratophyllales","Proteales")
 
   #Combine data with species information
-  x<- x %>% dplyr::rename("ScientificName" = name)
+ # x<- x %>% dplyr::rename("ScientificName" = name)
+  base::colnames(x)[base::colnames(x)== name] <- "ScientificName"
   x<- dplyr::left_join(x,species_info, by= "ScientificName")
   sf::sf_use_s2(FALSE)
 
@@ -132,12 +133,13 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
   #Take cases according to data type
   if(type=="range_maps"){
     base::colnames(x) [1:(base::ncol(x)-21)]<- base::toupper(base::names(x)[1:(base::ncol(x)-21)])
-	x<- dplyr::mutate(x, ScientificName = SCIENTIFICNAME)
-	#apply range map function and write outputs
-	x<- x %>% base::split(x$ScientificName) %>% base::lapply(., range_maps) %>%
+    #base::colnames(x)[base::colnames(x) == SCIENTIFICNAME] <- "ScientificName"
+	  x<- x %>% dplyr::mutate(ScientificName=SCIENTIFICNAME)
+    #apply range map function and write outputs
+	  x<- x %>% base::split(x$ScientificName) %>% base::lapply(., range_maps) %>%
      base::do.call(base::rbind,.)
-	#write outputs
-	x %>% base::split(x$ScientificName) %>% base::lapply(., function(z)
+	  #write outputs
+	  x %>% base::split(x$ScientificName) %>% base::lapply(., function(z)
      sf::st_write(z,base::paste0("input/species/",system,"/",type,
      "/",base::unique(z$ScientificName),".gpkg"), row.names=FALSE))
   }
@@ -170,11 +172,5 @@ species_edit<- function(x,type= c("AOO", "AOH", "localities", "range_maps"),
       lapply(., function(y) sf::st_write(y,
       base::paste0("input/species/",system,"/",type,
       "/",base::unique(y$ScientificName),".gpkg"),row.names=FALSE))
-  }
-
-  #Take cases according to data type
-  if(type=="population"){
-    x %>% utils::write.csv(base::paste0("input/species/",system,"/",type,
-      "/population.csv"), row.names=FALSE)
   }
 }
