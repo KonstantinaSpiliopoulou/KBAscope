@@ -62,8 +62,7 @@ potential_kbas<- function(x,system="terrestrial", output=".gpkg"){
   #Polygonize grids and create potential KBA sites
   grid<- ptriggers %>% dplyr::group_by(SiteID) %>%
     dplyr::summarise(geometry= sf::st_union(geom)) %>%
-    base::data.frame() %>% sf::st_as_sf() %>%
-    dplyr::mutate(SiteID= base::paste0("pKBA_",1:base::nrow(.)))
+    base::data.frame() %>% sf::st_as_sf()
 
   #Write geopackage outputs
   sf::st_write(grid, base::paste0(x,"results/",system,"/potential_KBAs",output),
