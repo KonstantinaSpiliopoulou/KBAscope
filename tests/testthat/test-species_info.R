@@ -1,22 +1,37 @@
-test_that("input is a data frame", {
-  x<- sf::st_drop_geometry(KBAscope::species)
-  expect_equal(class(x),"data.frame")
+
+test_that("Red list true", {
+  x<- KBAscope::species %>% dplyr::mutate(ScientificName=SCI_NAME)
+  RL<- KBAscope::red_list_info(taxonomy, assessment, common_names)
+  
+  expect_true(unique(c("TaxonomicGroup","rr_size",
+                       "B2_RR") %in% names(species_info(x,name="ScientificName",
+                                                        taxonomy_info=RL))))
 })
 
-
-test_that("multiplication works", {
-  x<- data.frame(ScientificName="A",ASSESSMENT=1,ID_NO=1,internalTaxonId=NA,
-    CommonName=NA,TaxonomicGroup_KBA_dataForm=NA,GlobalRedListCategory=NA,
-    AssessAgainstA1c_A1d=NA,AssessmentParameter=NA,Source=NA,DerivationOfEstimate=NA,
-    SourceOfData=NA,Range_Restricted=NA,Eco_BioRestricted=NA,YearOfSiteValues=NA,
-    phylum=NA,class=NA,order=NA,family=NA,TaxonomicGroup=NA,rr_size=NA,B2_RR=NA)
-
-  expect_true(unique(c("ScientificName","ASSESSMENT","ID_NO","internalTaxonId","CommonName",
-                       "TaxonomicGroup_KBA_dataForm","GlobalRedListCategory","AssessAgainstA1c_A1d",
-                       "AssessmentParameter","Source","DerivationOfEstimate","SourceOfData",
-                       "Range_Restricted","Eco_BioRestricted","YearOfSiteValues","phylum",
-                       "class","order","family","TaxonomicGroup","rr_size","B2_RR") %in% names(x)))
+test_that("Red list false", {
+  x<- KBAscope::species %>% dplyr::mutate(ScientificName=SCI_NAME)
+  RL<- KBAscope::red_list_info(taxonomy, assessment, common_names)
+  
+  expect_true(unique(c("TaxonomicGroup","rr_size",
+          "B2_RR") %in% names(species_info(x,name="ScientificName",red_list=FALSE, 
+                                           taxonomy_info=RL))))
 })
 
+test_that("TaxonomicGroup NA", {
+  x<- KBAscope::species %>% dplyr::mutate(ScientificName="D")
+  RL<- KBAscope::red_list_info(taxonomy, assessment, common_names)
+  
+  expect_true(unique(c("TaxonomicGroup","rr_size",
+                       "B2_RR") %in% names(species_info(x,name="ScientificName",red_list=TRUE, 
+                                                        taxonomy_info=RL))))
+})
 
-
+test_that("TaxonomicGroup not NA", {
+  x<- KBAscope::species %>% dplyr::filter(SCI_NAME=="B") %>%
+    dplyr::mutate(ScientificName="B")
+  RL<- KBAscope::red_list_info(taxonomy, assessment, common_names)
+  
+  expect_true(unique(c("TaxonomicGroup","rr_size",
+                       "B2_RR") %in% names(species_info(x,name="ScientificName",red_list=TRUE, 
+                                                        taxonomy_info=RL))))
+})

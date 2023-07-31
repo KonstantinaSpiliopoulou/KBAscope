@@ -2,9 +2,16 @@
 test_that("KBA criterion B columns created", {
   x<- data.frame(scientificName= "speciesX",TaxonomicGroup= "Mammalia",
       Range_Restricted= "Yes", Eco_BioRestricted= "Yes", proportion= 11.3)
-  expect_true(unique(c("Criterion_B1","Criterion_B2","Criterion_B3") %in% names(criterion_B(x))))
+  expect_true(unique(c("Criterion_B1","Criterion_B2",
+                       "Criterion_B3") %in% names(criterion_B(x))))
 })
 
+test_that("KBA criterion B columns created", {
+  x<- data.frame(scientificName= "speciesX",TaxonomicGroup= "NA",
+                 Range_Restricted= "Yes", Eco_BioRestricted= "Yes", proportion= 11.3)
+  expect_true(unique(c("Criterion_B1","Criterion_B2",
+                       "Criterion_B3") %in% names(criterion_B(x))))
+})
 
 test_that("input is an object sf and data frame", {
   x<- KBAscope::species

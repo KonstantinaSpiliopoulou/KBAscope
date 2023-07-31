@@ -1,8 +1,10 @@
-test_that("new columns added", {
-  x<- data.frame(internalTaxonId='1',name="a",scientificName.x="a",className=NA,redlistCategory=NA,
-                 redlistCriteria=NA,assessmentDate=NA,phylumName=NA,className=NA,orderName=NA,
-                 familyName=NA,genusName=NA)
 
-  expect_true(unique(c("internalTaxonId","name","scientificName.x","className","redlistCategory","redlistCriteria",
-                       "assessmentDate","phylumName","className","orderName","familyName","genusName") %in% names(x)))
+test_that("columns are created", {
+  
+  expect_true(unique(c("internalTaxonId", "CommonName", "ScientificName",
+                       "GlobalRedListCategory", "AssessAgainstA1c_A1d","YearOfSiteValues",
+                       "AssessmentParameter", "Source", "DerivationOfEstimate",
+                       "SourceOfData","Range_Restricted", "Eco_BioRestricted","phylum",
+                       "class","order","family") %in% names(red_list_info(taxonomy,
+                                                        assessment, common_names))))
 })
