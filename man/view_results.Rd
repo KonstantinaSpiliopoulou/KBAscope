@@ -27,8 +27,7 @@ Visualize results.
 }
 \examples{
 \dontrun{
-  df<- sf::st_drop_geometry(triggers_gis)
-  view_results(df,triggers_gis, pic=TRUE)
+  view_results(triggers_gis,potential_KBAs, pic=TRUE)
 }
 
 }
