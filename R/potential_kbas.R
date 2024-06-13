@@ -30,7 +30,7 @@ potential_kbas<- function(x,system="terrestrial", output=".gpkg"){
     function(y) sf::st_read(base::paste0(x,"/output/",system,"/",y),
                             stringsAsFactors=FALSE)) %>%
     base::do.call(base::rbind,.) %>% sf::st_sf() %>% sf::st_buffer(., 0.0) %>% 
-    sf::st_make_valid() %>% sf::st_transform(crs = 4326)
+    sf::st_make_valid() %>% sf::st_transform(crs = 54034)
   
   #Filter out species that meet only B2 and B3 criteria but do not meet the site threshold
   B2.B3<- ptriggers %>% dplyr::filter(Criterion_B2=="B2"| Criterion_B3=="B3") %>%
